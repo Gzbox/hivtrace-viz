@@ -221,14 +221,14 @@ function open_editor(
       var grp_name_button = grp_name
         .append("input")
         .classed("form-control input-sm", true)
-        .attr("placeholder", __("clusters_tab")["name_cluster"])
+        .attr("placeholder", __("clusters_tab")["name_cluster"] || "Name this cluster of interest")
         .attr("data-hivtrace-ui-role", "priority-panel-name")
         .attr("maxlength", 100);
 
       var grp_name_box_label = grp_name
         .append("p")
         .classed("help-block", true)
-        .text(__("clusters_tab")["name_cluster"]);
+        .text(__("clusters_tab")["name_cluster"] || "Name this cluster of interest");
 
       var grp_kind = form_save.append("div").classed("form-group", true);
 
@@ -268,7 +268,7 @@ function open_editor(
       grp_kind
         .append("p")
         .classed("help-block", true)
-        .text(__("clusters_tab")["identification_method"]);
+        .text(__("clusters_tab")["identification_method"] || "Cluster identification method");
 
       var grp_tracking = form_save.append("div").classed("form-group", true);
 
@@ -301,7 +301,7 @@ function open_editor(
       grp_tracking
         .append("p")
         .classed("help-block", true)
-        .text(__("clusters_tab")["tracking_method"]);
+        .text(__("clusters_tab")["tracking_method"] || "Method of tracking cluster of interest growth");
 
       var grp_desc = form_save.append("div").classed("form-group", true);
 
@@ -314,7 +314,7 @@ function open_editor(
       grp_desc
         .append("p")
         .classed("help-block", true)
-        .text(__("clusters_tab")["describe_cluster"]);
+        .text(__("clusters_tab")["describe_cluster"] || "Describe this cluster of interest");
 
       panel_object.first_save = true;
       panel_object.cleanup_attributes = function () {
@@ -413,11 +413,9 @@ function open_editor(
                 });
                 if (
                   confirm(
-                    (__("general")["coi_does_not_include_eligible"] || 'This cluster of interest does not include all the nodes in the current network that are eligible for membership by growth criterion  "') +
+                    (__("general")["coi_does_not_include_eligible"] || 'This cluster of interest does not include all the nodes in the current network that are eligible for membership by growth criterion "') +
                       tracking +
-                      '". These ' +
-                      self.unique_entity_list(added_node_objects).length +
-                      " additional nodes will be automatically added to this cluster of interest when you save it. If you don’t want to add these nodes to the cluster of interest please select 'Cancel' and change the growth criterion."
+                      (__("general")["coi_additional_nodes_message"] || '". These {count} additional nodes will be automatically added to this cluster of interest when you save it. If you don\'t want to add these nodes to the cluster of interest please select \'Cancel\' and change the growth criterion.').replace("{count}", self.unique_entity_list(added_node_objects).length)
                   )
                 ) {
                   _.each(added_node_objects, (n) => {
@@ -473,7 +471,7 @@ function open_editor(
       var save_set_button = form
         .append("button")
         .classed("btn btn-primary btn-sm pull-right", true)
-        .text(validation_mode === "validate" ? __("clusters_tab")["review_save"] : __("clusters_tab")["save"])
+        .text(validation_mode === "validate" ? (__("clusters_tab")["review_save"] || "Review & Save") : (__("clusters_tab")["save"] || "Save"))
         .attr("disabled", "disabled")
         .attr("id", "priority-panel-save")
         .on("click", (e) => {
@@ -484,7 +482,7 @@ function open_editor(
         .append("button")
         .classed("btn btn-info btn-sm pull-right", true)
         .attr("id", "priority-panel-preview")
-        .text(__("clusters_tab")["preview_threshold"].replace("{threshold}", "1.5%"))
+        .text((__("clusters_tab")["preview_threshold"] || "Preview @{threshold}").replace("{threshold}", "1.5%"))
         .on("click", (e) => {
           priority_set_view(self, priority_set_editor, {
             "priority-edge-length": 0.015,
@@ -495,7 +493,7 @@ function open_editor(
         .append("button")
         .classed("btn btn-info btn-sm pull-right", true)
         .attr("id", "priority-panel-preview-subcluster")
-        .text(__("clusters_tab")["preview_threshold"].replace("{threshold}", self.subcluster_threshold * 100 + "%"))
+        .text((__("clusters_tab")["preview_threshold"] || "Preview @{threshold}").replace("{threshold}", self.subcluster_threshold * 100 + "%"))
         .on("click", (e) => {
           priority_set_view(self, priority_set_editor, {
             "priority-edge-length": self.subcluster_threshold,
@@ -517,7 +515,7 @@ function open_editor(
             "has-error": false,
             "has-warning": false,
           });
-          grp_name_box_label.text(__("clusters_tab")["name_cluster"]);
+          grp_name_box_label.text(__("clusters_tab")["name_cluster"] || "Name this cluster of interest");
           if (panel_object.network_nodes.length) {
             save_set_button.attr("disabled", null);
           }
@@ -829,7 +827,7 @@ function open_editor(
                         });
                     }
                   } else {
-                    this_cell.text(__("clusters_tab")["na"]);
+                    this_cell.text(__("clusters_tab")["na"] || "N/A");
                   }
                 },
               };
@@ -1158,7 +1156,7 @@ function _action_drop_down(self, pg) {
       dropdown.push({
                   label: __("general")["delete_cluster"] || "Delete this cluster of interest",
         action: function (button, value) {
-          if (confirm(__("clusters_tab")["confirm_irreversible"])) {
+          if (confirm(__("clusters_tab")["confirm_irreversible"] || "This action cannot be undone. Proceed?")) {
             self.priority_groups_remove_set(pg.name, true);
           }
         },

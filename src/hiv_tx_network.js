@@ -2387,9 +2387,9 @@ class HIVTxNetwork {
         if (automatic_action_taken) {
           this.warning_string +=
             "<br/>" +
-            __("clusters_tab")["auto_created_message"].replace("{created}", autocreated).replace("{expanded}", autoexpanded) +
+            (__("clusters_tab")["auto_created_message"] || "Automatically created {created} and expanded {expanded} clusters of interest.").replace("{created}", autocreated).replace("{expanded}", autoexpanded) +
             (left_to_review > 0
-              ? " <b>" + __("clusters_tab")["review_clusters_message"].replace("{count}", "<span id='banner_coi_counts'></span>") + "</b><br>"
+              ? " <b>" + (__("clusters_tab")["review_clusters_message"] || "Please review {count} clusters in the Clusters of Interest tab.").replace("{count}", "<span id='banner_coi_counts'></span>") + "</b><br>"
               : "");
           this.display_warning(this.warning_string, true);
         }
@@ -2402,12 +2402,12 @@ class HIVTxNetwork {
         if (!this.priority_set_table_writeable) {
           const rationale =
             is_writeable === "old"
-              ? "<b>" + __("clusters_tab")["readonly_mode_old"] + "</b>"
-              : "<b>" + __("clusters_tab")["readonly_mode_standalone"] + "</b>";
-          this.warning_string += `<p class="alert alert-danger"class="alert alert-danger">${__("clusters_tab")["readonly_mode_message"].replace("{reason}", rationale)}</p>`;
+              ? "<b>" + (__("clusters_tab")["readonly_mode_old"] || "the network is older than some of the Clusters of Interest") + "</b>"
+              : "<b>" + (__("clusters_tab")["readonly_mode_standalone"] || "the network was ran in standalone mode so no data is stored") + "</b>";
+          this.warning_string += `<p class="alert alert-danger"class="alert alert-danger">${(__("clusters_tab")["readonly_mode_message"] || "READ-ONLY mode for Clusters of Interest is enabled because {reason}. None of the changes to clustersOI made during this session will be recorded.").replace("{reason}", rationale)}</p>`;
           this.display_warning(this.warning_string, true);
           if (tab_pill) {
-            d3.select(tab_pill).text(__("network_tab")["read_only"]);
+            d3.select(tab_pill).text(__("network_tab")["read_only"] || "Read-only");
           }
         } else if (tab_pill && left_to_review > 0) {
           d3.select(tab_pill).text(left_to_review);
@@ -3041,11 +3041,11 @@ class HIVTxNetwork {
         };
         network.handle_inline_charts();
         if (e) {
-                      e.text(__("network_tab")["hide_time_plots"]);
+                      e.text(__("network_tab")["hide_time_plots"] || "Hide time-course plots");
         }
       } else {
         if (e) {
-                      e.text(__("network_tab")["show_time_plots"]);
+                      e.text(__("network_tab")["show_time_plots"] || "Show time-course plots");
         }
         network.network_cluster_dynamics.remove();
         network.network_cluster_dynamics = null;
@@ -3055,7 +3055,7 @@ class HIVTxNetwork {
 
     if (timeDateUtil.getClusterTimeScale()) {
       if (export_items) {
-        export_items.push(["Show time-course plots", event_handler]);
+        export_items.push([__("general")["show_time_course_plots_menu"] || "Show time-course plots", event_handler]);
       } else {
         event_handler(this);
       }

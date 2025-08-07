@@ -63,21 +63,21 @@ function hivtraceClusterGraphSummary(network, tag, not_CDC) {
   degrees = helpers.describe_vector(degrees);
 
   // Add degrees statistics to table data
-  table_data.push([__("statistics")["links_per_node"], ""]);
+  table_data.push([__("statistics")["links_per_node"] || "Links per node", ""]);
   table_data.push([
-    "&nbsp;&nbsp;<i>" + __("statistics")["mean"] + "</i>",
+    "&nbsp;&nbsp;<i>" + (__("statistics")["mean"] || "Mean") + "</i>",
     _defaultFloatFormat(degrees["mean"]),
   ]);
   table_data.push([
-    "&nbsp;&nbsp;<i>" + __("statistics")["median"] + "</i>",
+    "&nbsp;&nbsp;<i>" + (__("statistics")["median"] || "Median") + "</i>",
     _defaultFloatFormat(degrees["median"]),
   ]);
   table_data.push([
-    "&nbsp;&nbsp;<i>" + __("statistics")["range"] + "</i>",
+    "&nbsp;&nbsp;<i>" + (__("statistics")["range"] || "Range") + "</i>",
     degrees["min"] + " - " + degrees["max"],
   ]);
   table_data.push([
-    "&nbsp;&nbsp;<i>" + __("statistics")["interquartile_range"] + "</i>",
+    "&nbsp;&nbsp;<i>" + (__("statistics")["interquartile_range"] || "Interquartile range") + "</i>",
     degrees["Q1"] + " - " + degrees["Q3"],
   ]);
 
@@ -85,31 +85,31 @@ function hivtraceClusterGraphSummary(network, tag, not_CDC) {
   degrees = helpers.describe_vector(graph["Cluster sizes"]);
 
   // Add cluster sizes statistics to table data
-  table_data.push([__("statistics")["cluster_sizes"], ""]);
+  table_data.push([__("statistics")["cluster_sizes"] || "Cluster sizes", ""]);
   table_data.push([
-    "&nbsp;&nbsp;<i>" + __("statistics")["mean"] + "</i>",
+          "&nbsp;&nbsp;<i>" + (__("statistics")["mean"] || "Mean") + "</i>",
     _defaultFloatFormat(degrees["mean"]),
   ]);
   table_data.push([
-    "&nbsp;&nbsp;<i>" + __("statistics")["median"] + "</i>",
+    "&nbsp;&nbsp;<i>" + (__("statistics")["median"] || "Median") + "</i>",
     _defaultFloatFormat(degrees["median"]),
   ]);
   table_data.push([
-    "&nbsp;&nbsp;<i>" + __("statistics")["range"] + "</i>",
+    "&nbsp;&nbsp;<i>" + (__("statistics")["range"] || "Range") + "</i>",
     degrees["min"] + " - " + degrees["max"],
   ]);
   table_data.push([
-    "&nbsp;&nbsp;<i>" + __("statistics")["interquartile_range"] + "</i>",
+    "&nbsp;&nbsp;<i>" + (__("statistics")["interquartile_range"] || "Interquartile range") + "</i>",
     degrees["Q1"] + " - " + degrees["Q3"],
   ]);
 
   if (network.has_multiple_sequences) {
     table_data.push([
-      __("statistics")["persons_with_multiple_sequences"],
+      __("statistics")["persons_with_multiple_sequences"] || "Persons with >1 sequence",
       _.filter(network.primary_key_list, (d, k) => d.length > 1).length,
     ]);
     table_data.push([
-      __("statistics")["persons_in_multiple_clusters"],
+      __("statistics")["persons_in_multiple_clusters"] || "Persons in multiple clusters",
       _.size(network.entities_in_multiple_clusters),
     ]);
   }
@@ -122,21 +122,21 @@ function hivtraceClusterGraphSummary(network, tag, not_CDC) {
     // Add edge length statistics to table data
     table_data.push([__("statistics")["genetic_distances_links_only"] || "Genetic distances (links only)", ""]);
     table_data.push([
-      "&nbsp;&nbsp;<i>" + __("statistics")["mean"] + "</i>",
+      "&nbsp;&nbsp;<i>" + (__("statistics")["mean"] || "Mean") + "</i>",
       _defaultPercentFormat(degrees["mean"]),
     ]);
     table_data.push([
-      "&nbsp;&nbsp;<i>" + __("statistics")["median"] + "</i>",
+      "&nbsp;&nbsp;<i>" + (__("statistics")["median"] || "Median") + "</i>",
       _defaultPercentFormat(degrees["median"]),
     ]);
     table_data.push([
-      "&nbsp;&nbsp;<i>" + __("statistics")["range"] + "</i>",
+      "&nbsp;&nbsp;<i>" + (__("statistics")["range"] || "Range") + "</i>",
       _defaultPercentFormat(degrees["min"]) +
         " - " +
         _defaultPercentFormat(degrees["max"]),
     ]);
     table_data.push([
-      "&nbsp;&nbsp;<i>" + __("statistics")["interquartile_range"] + "</i>",
+      "&nbsp;&nbsp;<i>" + (__("statistics")["interquartile_range"] || "Interquartile range") + "</i>",
       _defaultPercentFormat(degrees["Q1"]) +
         " - " +
         _defaultPercentFormat(degrees["Q3"]),

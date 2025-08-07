@@ -255,11 +255,11 @@ const CDCCOIKind = [
 */
 
 const CDCCOITrackingOptions = [
-  "01. Add cases diagnosed in the past 3 years and linked at 0.5% to a member in this cluster of interest",
-  "02. Add cases (regardless of HIV diagnosis date) linked at 0.5% to a member in this cluster of interest",
-  "03. Add cases diagnosed in the past 3 years and linked at 1.5% to a member in this cluster of interest",
-  "04. Add cases (regardless of HIV diagnosis date) linked at 1.5% to a member in this cluster of interest",
-  "05. Do not add cases to this cluster of interest. I do not want to monitor growth in this cluster of interest over time.",
+  __("general")["tracking_option_1"] || "01. Add cases diagnosed in the past 3 years and linked at 0.5% to a member in this cluster of interest",
+  __("general")["tracking_option_2"] || "02. Add cases (regardless of HIV diagnosis date) linked at 0.5% to a member in this cluster of interest",
+  __("general")["tracking_option_3"] || "03. Add cases diagnosed in the past 3 years and linked at 1.5% to a member in this cluster of interest",
+  __("general")["tracking_option_4"] || "04. Add cases (regardless of HIV diagnosis date) linked at 1.5% to a member in this cluster of interest",
+  __("general")["tracking_option_5"] || "05. Do not add cases to this cluster of interest. I do not want to monitor growth in this cluster of interest over time.",
 ];
 
 /**
@@ -481,7 +481,7 @@ const CDCCOINodeKindDefault = CDCCOINodeKind[0];
     The method of node identification used by default (and it automatically created COI)
 */
 
-const CDCNPMember = __("general")["national_priority_label"];
+const CDCNPMember = __("general")["national_priority_label"] || "Ever in national priority clusterOI?";
 
 /**
     CDCNPMember:
@@ -491,7 +491,7 @@ const CDCNPMember = __("general")["national_priority_label"];
 const missing = {
   color: "#999",
   opacity: "0.1",
-  label: __("general")["missing"],
+  label: __("general")["missing"] || "Missing",
 };
 
 /**

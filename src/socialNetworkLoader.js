@@ -392,7 +392,7 @@ export function load_nodes_edges(
                 .append("button")
                 .classed("btn btn-primary btn-xs pull-right", true)
                 .style("margin-left", "1em")
-                .text(__("general")["complete_annotation"].replace("{annotation}", annotation))
+                .text((__("general")["complete_annotation"] || "Complete {annotation}").replace("{annotation}", annotation))
                 .on("click", (e_event) =>
                   injected_column_subcluster_button_handler_internal(
                     tx_network,
@@ -411,7 +411,7 @@ export function load_nodes_edges(
               this_cell
                 .append("button")
                 .classed("btn btn-primary btn-xs pull-right", true)
-                .text(__("general")["directly_linked"].replace("{annotation}", annotation))
+                .text((__("general")["directly_linked"] || "Directly linked {annotation}").replace("{annotation}", annotation))
                 .on("click", (e_event) =>
                   injected_column_subcluster_button_handler_internal(
                     tx_network,
@@ -463,7 +463,7 @@ export function load_nodes_edges(
                   this_cell
                     .append("span")
                     .classed("label label-info", true)
-                    .text(__("general")["bridges_to_clusters"].replace("{count}", other_clusters.length))
+                    .text((__("general")["bridges_to_clusters"] || "Bridges to {count} clusters").replace("{count}", other_clusters.length))
                     .attr("title", other_clusters.join(", "));
                 }
               }
@@ -488,7 +488,7 @@ export function load_nodes_edges(
                 this_cell
                   .append("button")
                   .classed("btn btn-primary btn-xs pull-right", true)
-                  .text(__("general")["directly_linked"].replace("{annotation}", annotation))
+                  .text((__("general")["directly_linked"] || "Directly linked {annotation}").replace("{annotation}", annotation))
                   .style("margin-left", "1em")
                   .on("click", (e_event) => {
                     var directly_linked_ids = {};
@@ -527,7 +527,7 @@ export function load_nodes_edges(
                 this_cell
                   .append("button")
                   .classed("btn btn-primary btn-xs pull-right", true)
-                  .text(__("general")["complete_annotation"].replace("{annotation}", annotation))
+                  .text((__("general")["complete_annotation"] || "Complete {annotation}").replace("{annotation}", annotation))
                   .on("click", (e_event) =>
                     social_view_handler_internal(
                       tx_network,

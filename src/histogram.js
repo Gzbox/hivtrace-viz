@@ -65,7 +65,7 @@ function hivtrace_histogram_distances(graph, histogram_tag, histogram_label) {
     histogram_tag
   );
 
-  var label = __("statistics")["genetic_distances_among_linked_nodes"];
+  var label = __("statistics")["genetic_distances_among_linked_nodes"] || "Genetic distances among linked nodes";
   d3.select(histogram_label).html(label);
 }
 
@@ -168,7 +168,7 @@ function hivtrace_render_histogram_continuous(data, w, h, id) {
       .attr("y", 0 - margin.left + y_axis_label_width)
       .attr("x", 0 - height / 2)
       .style("text-anchor", "middle")
-      .text(__("statistics")["edges_label"]);
+      .text(__("statistics")["edges_label"] || "Edges");
 
     var x_axis_label = histogram_svg // eslint-disable-line
       .append("text")
@@ -177,7 +177,7 @@ function hivtrace_render_histogram_continuous(data, w, h, id) {
         "translate(" + width / 2 + " ," + (height + margin.top + 20) + ")"
       )
       .style("text-anchor", "middle")
-      .text(__("statistics")["genetic_distance"]);
+      .text(__("statistics")["genetic_distance"] || "Genetic Distance");
 
     var y_axis = histogram_svg // eslint-disable-line
       .append("g")

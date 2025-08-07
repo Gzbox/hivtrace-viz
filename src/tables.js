@@ -121,7 +121,7 @@ function add_a_sortable_table(
       table_caption
         .select(misc.get_ui_element_selector_by_role("table-count-warning"))
         .style("color", "black")
-        .text(__("general")["truncated_rows"].replace("{count}", N));
+        .text((__("general")["truncated_rows"] || "Truncated due to the large number of rows ({count})").replace("{count}", N));
     }
   }
 
@@ -191,7 +191,7 @@ function format_a_cell(data, index, item, priority_set_editor) {
           .style("margin-left", "0.2em")
           .attr(
             "title",
-            __("general")["add_visible_nodes_to_coi"]
+                          __("general")["add_visible_nodes_to_coi"] || "Add currently visible nodes to the Cluster of Interest"
           );
 
         add_to_ps.on("click", (d) => {

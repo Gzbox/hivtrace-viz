@@ -132,7 +132,7 @@ function secure_hiv_trace_subcluster_columns(self) {
                   }
                   return false;
                 },
-                help: __("general")["add_to_cluster_help"],
+                help: __("general")["add_to_cluster_help"] || "Add to cluster of interest",
               };
             });
           },
@@ -198,7 +198,7 @@ function secure_hiv_trace_subcluster_columns(self) {
                 help:
                   (__("general")["do_some_of_these"] || "Do some of these ") +
                   c.length +
-                  " nodes belong to a cluster of interest?",
+                  (__("general")["nodes_belong_to_coi_question"] || " nodes belong to a cluster of interest?"),
                 action: function (this_button, cv) {
                   const nodeset = new Set(c);
                   this_button = $(this_button.node());
@@ -255,13 +255,13 @@ function secure_hiv_trace_subcluster_columns(self) {
                           check_membership = _.map(check_membership, (m) => {
                             let description = "";
                             if (m[1]) {
-                              description += " " + m[1] + " nodes belong";
+                              description += " " + m[1] + (__("general")["nodes_belong"] || " nodes belong");
                             }
                             if (m[2]) {
                               description +=
                                 (description.length ? ", " : " ") +
                                 m[2] +
-                                " nodes are directly linked @ " +
+                                (__("general")["nodes_directly_linked"] || " nodes are directly linked @ ") +
                                 kGlobals.formats.PercentFormatShort(
                                   self.subcluster_threshold
                                 );
@@ -270,14 +270,14 @@ function secure_hiv_trace_subcluster_columns(self) {
                               description +=
                                 (description.length ? ", " : " ") +
                                 m[3] +
-                                " nodes are indirectly linked @ " +
+                                (__("general")["nodes_indirectly_linked"] || " nodes are indirectly linked @ ") +
                                 kGlobals.formats.PercentFormatShort(
                                   self.subcluster_threshold
                                 );
                             }
 
                             description +=
-                              " to cluster of interest <code>" +
+                              (__("general")["to_cluster_of_interest"] || " to cluster of interest <code>") +
                               m[0] +
                               "</code>";
                             return description;
@@ -330,7 +330,7 @@ function secure_hiv_trace_subcluster_columns(self) {
                     }
                     return false;
                   },
-                  help: __("general")["add_to_cluster_help"],
+                  help: __("general")["add_to_cluster_help"] || "Add to cluster of interest",
                 };
               })
             );
