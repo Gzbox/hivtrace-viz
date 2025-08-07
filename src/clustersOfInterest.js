@@ -1702,7 +1702,7 @@ function priority_set_view(self, priority_set, options) {
   let reference_date = options["timestamp"] || self.today;
   let title =
     options["title"] ||
-    "clusterOI " + (priority_set.prior_name || priority_set.name || "unnamed");
+    "clusterOI " + (priority_set.prior_name || priority_set.name || (__("general")["unnamed"] || "unnamed"));
   let node_dates = {};
 
   if (priority_set.nodes) {

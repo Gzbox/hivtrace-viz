@@ -520,7 +520,7 @@ export function load_nodes_edges(
                       (n) => n.id in directly_linked_ids,
                       labeled_links,
                       shown_types,
-                      (id) => "Cluster " + id + "[+ direct " + annotation + "]"
+                      (id) => (__("general")["cluster_prefix"] || "Cluster") + " " + id + "[+ " + (__("general")["direct"] || "direct") + " " + annotation + "]"
                     );
                   });
 
@@ -536,7 +536,7 @@ export function load_nodes_edges(
                         n.extended_cluster && payload[2] in n.extended_cluster,
                       labeled_links,
                       shown_types,
-                      (id) => "Cluster " + id + "[+ " + annotation + "]",
+                      (id) => (__("general")["cluster_prefix"] || "Cluster") + " " + id + "[+ " + annotation + "]",
                       annotation
                     )
                   );

@@ -2691,7 +2691,7 @@ class HIVTxNetwork {
               label: __("general")["viral_load_interpretation"] || "Viral load result interpretation",
       color_stops: 6,
       scale: d3.scale.log(10).domain([10, 1e6]).range([0, 5]),
-      category_values: ["Suppressed", "Viremic (above assay limit)"],
+      category_values: [__("general")["suppressed"] || "Suppressed", __("general")["viremic_above_limit"] || "Viremic (above assay limit)"],
       type: "Number-categories",
       color_scale: (attr) => {
         var color_scale_d3 = d3.scale
@@ -2738,7 +2738,7 @@ class HIVTxNetwork {
         ) {
           if (result_interpretation !== kGlobals.missing.label) {
             if (result_interpretation === "<") {
-              return "Suppressed";
+              return __("general")["suppressed"] || "Suppressed";
             }
             if (result_interpretation === ">") {
               return __("general")["viremic_above_limit"] || "Viremic (above assay limit)";
@@ -2764,21 +2764,21 @@ class HIVTxNetwork {
   define_attribute_network_update() {
     return {
               label: __("general")["sequence_updates"] || "Sequence updates compared to previous network",
-      enum: ["Existing", "New", "Moved clusters"],
+      enum: [__("general")["existing"] || "Existing", __("general")["new_state"] || "New", __("general")["moved_clusters"] || "Moved clusters"],
       type: "String",
       map: function (node) {
         if (HIVTxNetwork.is_new_node(node)) {
-          return "New";
+          return __("general")["new_state"] || "New";
         }
         if (node.attributes.indexOf("moved_clusters") >= 0) {
-          return "Moved clusters";
+          return __("general")["moved_clusters"] || "Moved clusters";
         }
-        return "Existing";
+        return __("general")["existing"] || "Existing";
       },
       color_scale: function () {
         return d3.scale
           .ordinal()
-          .domain(["Existing", "New", "Moved clusters", kGlobals.missing.label])
+          .domain([__("general")["existing"] || "Existing", __("general")["new_state"] || "New", __("general")["moved_clusters"] || "Moved clusters", kGlobals.missing.label])
           .range(["#7570b3", "#d95f02", "#1b9e77", "gray"]);
       },
     };
@@ -2928,7 +2928,7 @@ class HIVTxNetwork {
       depends: ["age_dx"],
       overwrites: "age_dx",
               label: __("general")["age_at_diagnosis"] || "Age at Diagnosis",
-      enum: ["<13", "13-19", "20-29", "30-39", "40-49", "50-59", "�60"],
+      enum: [__("general")["age_under_13"] || "<13", __("general")["age_13_19"] || "13-19", __("general")["age_20_29"] || "20-29", __("general")["age_30_39"] || "30-39", __("general")["age_40_49"] || "40-49", __("general")["age_50_59"] || "50-59", __("general")["age_60_over"] || "≥60"],
       type: "String",
       color_scale: function () {
         return d3.scale

@@ -255,20 +255,20 @@ function datamonkey_describe_vector(vector, as_list) {
 
   if (as_list) {
     d =
-      "<pre>Range  :" +
+      "<pre>" + (__("general")["stat_range"] || "Range  :") +
       d["min"] +
       "-" +
       d["max"] +
       "\n" +
-      "IQR    :" +
+      (__("general")["stat_iqr"] || "IQR    :") +
       d["Q1"] +
       "-" +
       d["Q3"] +
       "\n" +
-      "Mean   :" +
+      (__("general")["stat_mean"] || "Mean   :") +
       d["mean"] +
       "\n" +
-      "Median :" +
+      (__("general")["stat_median"] || "Median :") +
       d["median"] +
       "\n" +
       "</pre>";

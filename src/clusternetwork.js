@@ -598,7 +598,7 @@ var hivtrace_cluster_network_graph = function (
 
     return self.open_exclusive_tab_view_aux(
       filtered_json,
-      custom_name ? custom_name(cluster_id) : "Cluster " + cluster_id,
+      custom_name ? custom_name(cluster_id) : (__("general")["cluster_prefix"] || "Cluster") + " " + cluster_id,
       additional_options
     );
   };
@@ -636,7 +636,7 @@ var hivtrace_cluster_network_graph = function (
       .attr("data-toggle", "tab")
       .text(title);
     $(
-      '<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
+      '<button type="button" class="close" aria-label="' + (__("general")["close"] || "Close") + '"><span aria-hidden="true">&times;</span></button>'
     )
       .appendTo(new_link)
       .on("click", () => {
@@ -1157,7 +1157,7 @@ var hivtrace_cluster_network_graph = function (
       " .show-small-clusters-button";
 
     var item = $(
-      '<span class="input-group-addon btn view-parent-btn">View Parent</span>'
+      '<span class="input-group-addon btn view-parent-btn">' + (__("general")["view_parent"] || "View Parent") + '</span>'
     )
       .data("cluster_id", cluster.parent_cluster.cluster_id)
       .insertAfter(selector);
@@ -1851,7 +1851,7 @@ var hivtrace_cluster_network_graph = function (
             type: "String",
             label: __("general")["node_id"] || "Node ID",
             format: function () {
-              return "Node ID";
+              return __("general")["node_id"] || "Node ID";
             },
           },
           {
@@ -2206,7 +2206,7 @@ var hivtrace_cluster_network_graph = function (
                 }
               });
               desc.html(
-                "Merge " +
+                (__("general")["merge"] || "Merge") + " " +
                   current_selection.size +
                   " " + (__("general")["clusteroi_with"] || "clusterOI with") + " " +
                   clusterOITotalNOdes +
@@ -2228,7 +2228,7 @@ var hivtrace_cluster_network_graph = function (
                 self,
                 [],
                 "",
-                "Merged from " + [...current_selection].join(" and ")
+                (__("general")["merged_from"] || "Merged from") + " " + [...current_selection].join(" and ")
               );
               clustersOfInterest
                 .get_editor()
@@ -3104,7 +3104,7 @@ var hivtrace_cluster_network_graph = function (
                 [
                   [
                     [
-                      "None",
+                      __("general")["none_uppercase"] || "None",
                       null,
                       _.partial(self.handle_shape_categorical, null),
                     ],
@@ -3215,7 +3215,7 @@ var hivtrace_cluster_network_graph = function (
                 [
                   [
                     [
-                      "None",
+                      __("general")["none_uppercase"] || "None",
                       null,
                       _.partial(self.handle_attribute_opacity, null),
                     ],
@@ -3342,7 +3342,7 @@ var hivtrace_cluster_network_graph = function (
       if (_.size(self.exclude_cluster_ids)) {
         self.warning_string +=
           (self.warning_string.length ? "<br>" : "") +
-          "Excluded " +
+          (__("general")["excluded"] || "Excluded") + " " +
           (sorted_array.length - max_points_to_render) +
           " clusters (maximum size " +
           sorted_array[k - 1][0] +
@@ -3517,7 +3517,7 @@ var hivtrace_cluster_network_graph = function (
         labels.push([label_diff(payload[4]), payload["4"]["flag"]]);
       } else if (payload[4]["type"] === "merged") {
         labels.push([
-          "Merged " +
+          (__("general")["merged"] || "Merged") + " " +
             payload[4]["old_clusters"].join(", ") +
             " " +
             label_diff(payload[4]),
@@ -3568,29 +3568,29 @@ var hivtrace_cluster_network_graph = function (
         } else if (d[1] === 2 || d[1] === 3) {
           //_social_view_options (labeled_links, shown_types),
 
-          var shown_types = { Existing: 1, "Newly added": 1 },
-            link_class = ["Existing", "Newly added"];
+              var shown_types = { [__("general")["existing"] || "Existing"]: 1, [__("general")["newly_added"] || "Newly added"]: 1 },
+      link_class = [__("general")["existing"] || "Existing", __("general")["newly_added"] || "Newly added"];
 
           self
             .open_exclusive_tab_view(
               payload[3],
               null,
-              (cluster_id) => "Cluster " + cluster_id + " [changes view]",
+              (cluster_id) => (__("general")["cluster_prefix"] || "Cluster") + " " + cluster_id + " [changes view]",
               self._social_view_options(link_class, shown_types, (e) => {
-                if (
-                  _.isObject(e.source) &&
-                  HTX.HIVTxNetwork.is_new_node(e.source)
-                )
-                  return "Newly added";
-                if (
-                  _.isObject(e.target) &&
-                  HTX.HIVTxNetwork.is_new_node(e.target)
-                )
-                  return "Newly added";
+                              if (
+                _.isObject(e.source) &&
+                HTX.HIVTxNetwork.is_new_node(e.source)
+              )
+                return __("general")["newly_added"] || "Newly added";
+              if (
+                _.isObject(e.target) &&
+                HTX.HIVTxNetwork.is_new_node(e.target)
+              )
+                return __("general")["newly_added"] || "Newly added";
 
-                return e.attributes.indexOf("added-to-prior") >= 0
-                  ? "Newly added"
-                  : "Existing";
+              return e.attributes.indexOf("added-to-prior") >= 0
+                ? (__("general")["newly_added"] || "Newly added")
+                : (__("general")["existing"] || "Existing");
               })
             )
             .handle_attribute_categorical("_newly_added");
@@ -3920,7 +3920,7 @@ var hivtrace_cluster_network_graph = function (
         [table_headers],
         table_rows,
         container,
-        'Showing <span class="badge" data-hivtrace-ui-role="table-count-shown">--</span>/<span class="badge" data-hivtrace-ui-role="table-count-total">--</span> network entities <span class="label label-warning" data-hivtrace-ui-role="table-count-warning"></span>',
+        (__("general")["showing"] || "Showing") + ' <span class="badge" data-hivtrace-ui-role="table-count-shown">--</span>/<span class="badge" data-hivtrace-ui-role="table-count-total">--</span> ' + (__("general")["network_entities"] || "network entities") + ' <span class="label label-warning" data-hivtrace-ui-role="table-count-warning"></span>',
         N
       );
     }
@@ -4766,7 +4766,7 @@ var hivtrace_cluster_network_graph = function (
       // For each unique value, render item.
       // Min and max range for continuous values
       let items = [
-        colorPicker.colorStops("Color Stops", color_stops),
+        colorPicker.colorStops(__("general")["color_stops"] || "Color Stops", color_stops),
         colorPicker.colorPickerInputContinuous(
           "Min",
           self.uniqValues[cat_id]["min"]
@@ -6067,7 +6067,7 @@ var hivtrace_cluster_network_graph = function (
             "no-clusters": true,
             subclusters: true,
             headers: function (headers) {
-              headers[0][0].value = "Subcluster ID";
+              headers[0][0].value = __("general")["subcluster_id"] || "Subcluster ID";
               headers[0][0].help = __("general")["unique_subcluster_id"] || "Unique subcluster ID";
                               headers[0][2].help = __("general")["number_total_cases_subcluster"] || "Number of total cases in the subcluster";
             },
@@ -6664,7 +6664,7 @@ var hivtrace_cluster_network_graph = function (
     toggle_tooltip(
       this,
       true,
-      (self._is_CDC_ ? "Individual " : "Node ") + self.entity_id(d),
+      (self._is_CDC_ ? (__("general")["individual"] || "Individual") + " " : (__("general")["node"] || "Node") + " ") + self.entity_id(d),
       node_info_string(d),
       self.container
     );
@@ -7207,7 +7207,7 @@ var hivtrace_cluster_network_graph = function (
     toggle_tooltip(
       this,
       true,
-      "Cluster " + d.cluster_id,
+      (__("general")["cluster_prefix"] || "Cluster") + " " + d.cluster_id,
       cluster_info_string(d.cluster_id),
       self.container
     );
