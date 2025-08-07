@@ -458,7 +458,7 @@ class HIVTxNetwork {
       //console.log (misc.hivtrace_cluster_depthwise_traversal (c95.Nodes, c95.Edges, (d)=>d.length <= reduce_distance_within));
 
       let null_size = nodes_to_delete.size;
-      console.log("Marked ", null_size, " nodes in null clusters");
+              console.log((__("general")["marked_null_nodes"] || "Marked {count} nodes in null clusters").replace("{count}", null_size));
 
       _.each(complete_clusters, (cluster, cluster_index) => {
         if (cluster.length > 1) {
@@ -968,7 +968,7 @@ class HIVTxNetwork {
         }
       }
     } catch (e) {
-      console.log("attribute_node_value_by_id", e, d, id, number);
+      console.log(__("general")["attribute_node_value_debug"] || "attribute_node_value_by_id", e, d, id, number);
     }
     return kGlobals.missing.label;
   }
@@ -1229,10 +1229,10 @@ class HIVTxNetwork {
           .header("Content-Type", "application/json")
           .post(JSON.stringify(to_post), (error, data) => {
             if (error) {
-              console.log("received fatal error:", error);
+              console.log(__("general")["received_fatal_error"] || "received fatal error:", error);
               /*
                 $(".container").html(
-                  '<div class="alert alert-danger">FATAL ERROR. Please reload the page and contact help desk.</div>'
+                  '<div class="alert alert-danger">' + (__("general")["fatal_error_message"] || "FATAL ERROR. Please reload the page and contact help desk.") + '</div>'
                 );
                 */
             }
@@ -1452,12 +1452,12 @@ class HIVTxNetwork {
         (parsed_value.getFullYear() < 1970 ||
           parsed_value.getFullYear() > timeDateUtil.DateUpperBoundYear)
       ) {
-        throw Error("Invalid date");
+        throw Error(__("general")["invalid_date"] || "Invalid date");
       }
       return parsed_value;
     }
 
-    throw Error("Invalid date");
+    throw Error(__("general")["invalid_date"] || "Invalid date");
   }
 
   /**
@@ -1759,8 +1759,8 @@ class HIVTxNetwork {
 
             _.each(
               [
-                [inject_mspp_nodes, "used the following sequences "],
-                [discordant_node_record, "ignored the following sequences "],
+                        [inject_mspp_nodes, __("general")["used_sequences"] || "used the following sequences "],
+        [discordant_node_record, __("general")["ignored_sequences"] || "ignored the following sequences "],
               ],
               (pair, i) => {
                 if (pair[0].length) {
@@ -2119,10 +2119,10 @@ class HIVTxNetwork {
     });
 
     const pg_enum = [
-      "Yes (dx≤12 months)",
-      "Yes (12<dx≤36 months)",
-      "Yes (dx>36 months)",
-      "No",
+      __("general")["yes_dx_12_months"] || "Yes (dx≤12 months)",
+      __("general")["yes_dx_12_36_months"] || "Yes (12<dx≤36 months)",
+      __("general")["yes_dx_over_36_months"] || "Yes (dx>36 months)",
+      __("general")["no"] || "No",
     ];
 
     /** define and populate categorical node attributes */
@@ -2190,7 +2190,7 @@ class HIVTxNetwork {
       },
       cluster_uid: {
         depends: [timeDateUtil._networkCDCDateField],
-        label: "Clusters of Interest",
+        label: __("general")["clusters_of_interest"] || "Clusters of Interest",
         type: "String",
         volatile: true,
         map: function (node) {
@@ -2198,19 +2198,19 @@ class HIVTxNetwork {
           if (memberships.length === 1) {
             return pg_nodesets[memberships[0]][0];
           } else if (memberships.length > 1) {
-            return "Multiple";
+            return __("general")["multiple"] || "Multiple";
           }
-          return "None";
+          return __("general")["none_uppercase"] || "None";
         },
       },
       subcluster_id: {
         depends: [timeDateUtil._networkCDCDateField],
-        label: "Subcluster ID",
+        label: __("general")["subcluster_id"] || "Subcluster ID",
         type: "String",
         //label_format: d3.format(".2f"),
         map: function (node) {
           if (node) {
-            return node.subcluster_label || "None";
+            return node.subcluster_label || (__("general")["none_uppercase"] || "None");
           }
           return kGlobals.missing.label;
         },
@@ -2267,7 +2267,7 @@ class HIVTxNetwork {
     d3.json(url, (error, results) => {
       if (error) {
         throw Error(
-          "Failed loading cluster of interest file " + error.responseURL
+          (__("general")["failed_loading_file"] || "Failed loading cluster of interest file ") + error.responseURL
         );
       } else {
         let latest_date = new Date();
@@ -2346,7 +2346,7 @@ class HIVTxNetwork {
                   this.auto_create_priority_sets.push({
                     name: autoname,
                     description:
-                      "Automatically created cluster of interest " + autoname,
+                      (__("general")["auto_created_cluster"] || "Automatically created cluster of interest ") + autoname,
                     nodes: _.map(subcluster_data.recent_nodes[i], (n) =>
                       this.priority_group_node_record(
                         n,
@@ -2386,13 +2386,10 @@ class HIVTxNetwork {
 
         if (automatic_action_taken) {
           this.warning_string +=
-            "<br/>Automatically created <b>" +
-            autocreated +
-            "</b> and expanded <b>" +
-            autoexpanded +
-            "</b> clusters of interest." +
+            "<br/>" +
+            __("clusters_tab")["auto_created_message"].replace("{created}", autocreated).replace("{expanded}", autoexpanded) +
             (left_to_review > 0
-              ? " <b>Please review <span id='banner_coi_counts'></span> clusters in the <code>Clusters of Interest</code> tab.</b><br>"
+              ? " <b>" + __("clusters_tab")["review_clusters_message"].replace("{count}", "<span id='banner_coi_counts'></span>") + "</b><br>"
               : "");
           this.display_warning(this.warning_string, true);
         }
@@ -2405,12 +2402,12 @@ class HIVTxNetwork {
         if (!this.priority_set_table_writeable) {
           const rationale =
             is_writeable === "old"
-              ? "the network is <b>older</b> than some of the Clusters of Interest"
-              : "the network was ran in <b>standalone</b> mode so no data is stored";
-          this.warning_string += `<p class="alert alert-danger"class="alert alert-danger">READ-ONLY mode for Clusters of Interest is enabled because ${rationale}. None of the changes to clustersOI made during this session will be recorded.</p>`;
+              ? "<b>" + __("clusters_tab")["readonly_mode_old"] + "</b>"
+              : "<b>" + __("clusters_tab")["readonly_mode_standalone"] + "</b>";
+          this.warning_string += `<p class="alert alert-danger"class="alert alert-danger">${__("clusters_tab")["readonly_mode_message"].replace("{reason}", rationale)}</p>`;
           this.display_warning(this.warning_string, true);
           if (tab_pill) {
-            d3.select(tab_pill).text("Read-only");
+            d3.select(tab_pill).text(__("network_tab")["read_only"]);
           }
         } else if (tab_pill && left_to_review > 0) {
           d3.select(tab_pill).text(left_to_review);
@@ -2595,15 +2592,15 @@ class HIVTxNetwork {
       "No, but dx�12 months",
       "Yes (dx�12 months)",
       "Yes (12<dx� 36 months)",
-      "Future node", // 4
-      "Not a member of subcluster", // 5
-      "Not in a subcluster",
+              __("general")["future_node"] || "Future node", // 4
+              __("general")["not_member_subcluster"] || "Not a member of subcluster", // 5
+        __("general")["not_in_subcluster"] || "Not in a subcluster",
       "No, but 12<dx� 36 months",
     ];
 
     return {
       depends: [timeDateUtil._networkCDCDateField],
-      label: "ClusterOI membership as of " + timeDateUtil.DateViewFormat(date),
+              label: (__("general")["cluster_membership"] || "ClusterOI membership") + " as of " + timeDateUtil.DateViewFormat(date),
       enum: subcluster_enum,
       //type: "String",
       volatile: true,
@@ -2691,7 +2688,7 @@ class HIVTxNetwork {
   define_attribute_vl_interpretaion() {
     return {
       depends: ["vl_recent_value", "result_interpretation"],
-      label: "Viral load result interpretation",
+              label: __("general")["viral_load_interpretation"] || "Viral load result interpretation",
       color_stops: 6,
       scale: d3.scale.log(10).domain([10, 1e6]).range([0, 5]),
       category_values: ["Suppressed", "Viremic (above assay limit)"],
@@ -2744,7 +2741,7 @@ class HIVTxNetwork {
               return "Suppressed";
             }
             if (result_interpretation === ">") {
-              return "Viremic (above assay limit)";
+              return __("general")["viremic_above_limit"] || "Viremic (above assay limit)";
             }
             if (vl_value !== kGlobals.missing.label) {
               return vl_value;
@@ -2766,7 +2763,7 @@ class HIVTxNetwork {
 
   define_attribute_network_update() {
     return {
-      label: "Sequence updates compared to previous network",
+              label: __("general")["sequence_updates"] || "Sequence updates compared to previous network",
       enum: ["Existing", "New", "Moved clusters"],
       type: "String",
       map: function (node) {
@@ -2930,7 +2927,7 @@ class HIVTxNetwork {
     return {
       depends: ["age_dx"],
       overwrites: "age_dx",
-      label: "Age at Diagnosis",
+              label: __("general")["age_at_diagnosis"] || "Age at Diagnosis",
       enum: ["<13", "13-19", "20-29", "30-39", "40-49", "50-59", "�60"],
       type: "String",
       color_scale: function () {
@@ -3018,8 +3015,8 @@ class HIVTxNetwork {
               plot_filter
             ),
             network.network_cluster_dynamics,
-            "Quarter of Diagnosis",
-            "Number of Cases",
+            __("general")["quarter_of_diagnosis"] || "Quarter of Diagnosis",
+                          __("general")["number_of_cases"] || "Number of Cases",
             null,
             null,
             {
@@ -3044,11 +3041,11 @@ class HIVTxNetwork {
         };
         network.handle_inline_charts();
         if (e) {
-          e.text("Hide time-course plots");
+                      e.text(__("network_tab")["hide_time_plots"]);
         }
       } else {
         if (e) {
-          e.text("Show time-course plots");
+                      e.text(__("network_tab")["show_time_plots"]);
         }
         network.network_cluster_dynamics.remove();
         network.network_cluster_dynamics = null;

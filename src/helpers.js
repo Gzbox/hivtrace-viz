@@ -1,6 +1,6 @@
 var download = require("downloadjs");
 
-const _OTHER = __("general")["other"];
+const _OTHER = "Other";
 const CATEGORY_UNIQUE_VALUE_LIMIT = 12;
 
 /**
@@ -59,7 +59,7 @@ function datamonkey_export_csv_button(data, name) {
     pom.setAttribute("download", name);
     pom.className = "btn btn-default btn-sm";
     pom.innerHTML =
-      '<span class="glyphicon glyphicon-floppy-save"></span> Download CSV';
+      __("general")["download_csv_icon"] || '<span class="glyphicon glyphicon-floppy-save"></span> Download CSV';
     $("body").append(pom);
     pom.click();
     pom.remove();
@@ -86,7 +86,7 @@ function datamonkey_export_json_button(data, title) {
     pom.setAttribute("download", title + ".json");
     pom.className = "btn btn-default btn-sm";
     pom.innerHTML =
-      '<span class="glyphicon glyphicon-floppy-save"></span> Download JSON';
+      __("general")["download_json_icon"] || '<span class="glyphicon glyphicon-floppy-save"></span> Download JSON';
     $("body").append(pom);
     pom.click();
     pom.remove();
@@ -128,7 +128,7 @@ function datamonkey_save_image(type, container) {
           }
         }
       } catch {
-        console.log("Could not process stylesheet : " + ss); // eslint-disable-line
+        console.log((__("general")["could_not_process_stylesheet"] || "Could not process stylesheet : ") + ss); // eslint-disable-line
       }
     }
 
@@ -442,10 +442,10 @@ function exportColorScheme(uniqValues, colorizer) {
 function copyToClipboard(text) {
   navigator.clipboard.writeText(text).then(
     () => {
-      console.log("Copying to clipboard was successful!");
+      console.log(__("general")["copy_success"] || "Copying to clipboard was successful!");
     },
     (err) => {
-      console.error("Could not copy text: ", err);
+              console.error(__("general")["copy_error"] || "Could not copy text: ", err);
     }
   );
 }

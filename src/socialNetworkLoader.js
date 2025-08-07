@@ -148,7 +148,7 @@ function injected_column_subcluster_button_handler_internal(
   title_fn =
     title_fn ||
     function (id) {
-      return "Subcluster " + payload.cluster_id + "[+ " + annotation + "]";
+      return (__("general")["subcluster"] || "Subcluster ") + payload.cluster_id + "[+ " + annotation + "]";
     };
 
   var cv = tx_network.view_subcluster(
@@ -205,7 +205,7 @@ export function load_nodes_edges(
   if (nodes_and_attributes && nodes_and_attributes.length) {
     if (!(index_id in nodes_and_attributes[0])) {
       throw Error(
-        index_id + " is not one of the attributes in the imported node records"
+        index_id + " " + (__("general")["is_not_one_of_attributes"] || "is not one of the attributes in the imported node records")
       );
     }
 
@@ -278,7 +278,7 @@ export function load_nodes_edges(
                 existing_entities
               );
             } else {
-              throw Error("Invalid node: " + n_info.node);
+              throw Error(__("general")["invalid_node"] || "Invalid node: " + n_info.node);
             }
           });
 
@@ -317,12 +317,12 @@ export function load_nodes_edges(
           }
         } else {
           throw Error(
-            "Missing required attribute (Index, Partner, or Contact)"
+            __("general")["missing_required_attribute"] || "Missing required attribute (Index, Partner, or Contact)"
           );
         }
       } catch (err) {
         throw Error(
-          "Invalid edge specification ( " + err + ") " + JSON.stringify(e_attr)
+          (__("general")["invalid_edge_specification"] || "Invalid edge specification ( ") + err + ") " + JSON.stringify(e_attr)
         );
       }
     });
@@ -365,7 +365,7 @@ export function load_nodes_edges(
           });
         }
       } catch (err) {
-        console.log("Error processing edge for cluster types:", err, e_edge);
+        console.log(__("general")["error_processing_edge"] || "Error processing edge for cluster types:", err, e_edge);
       }
     });
 
@@ -380,7 +380,7 @@ export function load_nodes_edges(
       {
         description: {
           value: annotation + " network",
-          help: "View subclusters with " + annotation + " data",
+          help: (__("general")["view_subclusters_with"] || "View subclusters with ") + annotation + " data",
         },
         generator: function (cluster) {
           // cluster here is a subcluster object from tx_network.clusters[...].subclusters
@@ -392,7 +392,7 @@ export function load_nodes_edges(
                 .append("button")
                 .classed("btn btn-primary btn-xs pull-right", true)
                 .style("margin-left", "1em")
-                .text("Complete " + annotation)
+                .text(__("general")["complete_annotation"].replace("{annotation}", annotation))
                 .on("click", (e_event) =>
                   injected_column_subcluster_button_handler_internal(
                     tx_network,
@@ -411,7 +411,7 @@ export function load_nodes_edges(
               this_cell
                 .append("button")
                 .classed("btn btn-primary btn-xs pull-right", true)
-                .text("Directly linked " + annotation)
+                .text(__("general")["directly_linked"].replace("{annotation}", annotation))
                 .on("click", (e_event) =>
                   injected_column_subcluster_button_handler_internal(
                     tx_network,
@@ -420,7 +420,7 @@ export function load_nodes_edges(
                       tx_network.json.Nodes[edge.target].id in node_ids ||
                       tx_network.json.Nodes[edge.source].id in node_ids,
                     (id) =>
-                      "Subcluster " +
+                      (__("general")["subcluster"] || "Subcluster ") +
                       payload.cluster_id +
                       "[+ direct  " +
                       annotation +
@@ -440,7 +440,7 @@ export function load_nodes_edges(
           sort: function (c) {
             return c.value[0];
           },
-          help: "Nodes added and clusters merged through " + annotation,
+          help: (__("general")["nodes_added_through"] || "Nodes added and clusters merged through ") + annotation,
         },
         generator: function (cluster) {
           // cluster here is a main cluster object from tx_network.clusters
@@ -463,7 +463,7 @@ export function load_nodes_edges(
                   this_cell
                     .append("span")
                     .classed("label label-info", true)
-                    .text("Bridges to " + other_clusters.length + " clusters")
+                    .text(__("general")["bridges_to_clusters"].replace("{count}", other_clusters.length))
                     .attr("title", other_clusters.join(", "));
                 }
               }
@@ -488,7 +488,7 @@ export function load_nodes_edges(
                 this_cell
                   .append("button")
                   .classed("btn btn-primary btn-xs pull-right", true)
-                  .text("Directly linked " + annotation)
+                  .text(__("general")["directly_linked"].replace("{annotation}", annotation))
                   .style("margin-left", "1em")
                   .on("click", (e_event) => {
                     var directly_linked_ids = {};
@@ -527,7 +527,7 @@ export function load_nodes_edges(
                 this_cell
                   .append("button")
                   .classed("btn btn-primary btn-xs pull-right", true)
-                  .text("Complete " + annotation)
+                  .text(__("general")["complete_annotation"].replace("{annotation}", annotation))
                   .on("click", (e_event) =>
                     social_view_handler_internal(
                       tx_network,

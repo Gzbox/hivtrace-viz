@@ -6,17 +6,15 @@ const I18nPlugin = require("@zainulbr/i18n-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin"),
 
   languages = {
+    cn: require(path.join(
+      __dirname,
+      "assets",
+      "cn.json"
+    )),
     en: require(path.join(
       __dirname,
-      "node_modules",
-      "hivtrace-locales",
+      "assets",
       "en.json"
-    )),
-    es: require(path.join(
-      __dirname,
-      "node_modules",
-      "hivtrace-locales",
-      "es.json"
     )),
   };
 

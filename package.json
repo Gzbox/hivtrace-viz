@@ -55,7 +55,7 @@
     "file-loader": "^6.2.0",
     "font-awesome-webpack": "^0.0.5-beta.2",
     "font-awesome-webpack-4": "^1.0.0",
-    "hivtrace-locales": "^1.0.0",
+    "hivtrace-locales": "^1.0.2",
     "http-server": "^14.1.1",
     "husky": "^8.0.2",
     "imports-loader": "^4.0.1",
@@ -71,9 +71,9 @@
     "webpack-cli": "^5.0.0"
   },
   "scripts": {
-    "develop": "export NODE_OPTIONS=--openssl-legacy-provider; concurrently \"webpack --watch --mode=development\" \"http-server\"",
-    "crear": "export NODE_OPTIONS=--openssl-legacy-provider; concurrently \"webpack --env lang='es' --watch --mode=development\" \"http-server\"",
-    "build": "export NODE_OPTIONS=--openssl-legacy-provider; webpack && webpack --env lang='es'",
+    "develop": "export NODE_OPTIONS=--openssl-legacy-provider; concurrently \"webpack --env lang='cn' --watch --mode=development\" \"http-server\"",
+    "crear": "export NODE_OPTIONS=--openssl-legacy-provider; concurrently \"webpack --env lang='cn' --watch --mode=development\" \"http-server\"",
+    "build": "export NODE_OPTIONS=--openssl-legacy-provider; webpack && webpack --env lang='cn'",
     "lint": "eslint",
     "format": "prettier 'src/*.js' --write",
     "precommit": "pretty-quick --staged"

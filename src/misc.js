@@ -404,7 +404,7 @@ function hivtrace_coi_timeseries(cluster, element, plot_width) {
   let time_boxes = [null, null];
   let highlight_nodes = new Set();
 
-  let titles = data.concat([["Nat'l priority", x_range[0]]]);
+        let titles = data.concat([[__("general")["national_priority_short"] || "Nat'l priority", x_range[0]]]);
   let text_labels = svg
     .append("g")
     .attr("font-family", "sans-serif")
@@ -502,7 +502,7 @@ function hivtrace_coi_timeseries(cluster, element, plot_width) {
       const ed = cluster.event_info[d[0]];
       let text = d[0] + ". ";
       if (_.some(ed.national_priority)) {
-        text += "National priority clusterOI. ";
+        text += (__("general")["national_priority_clusteroi"] || "National priority clusterOI. ");
       }
       text +=
         String(d3.sum(ed.connected_componets)) +
@@ -510,7 +510,7 @@ function hivtrace_coi_timeseries(cluster, element, plot_width) {
         ed.connected_componets.length +
         " components. ";
       text +=
-        "A total of " +
+        (__("general")["a_total_of"] || "A total of ") +
         d3.sum(ed.priority_nodes, (d) => d.length) +
         " nodes dx'ed in the previous 12 months; maximum of " +
         d3.max(ed.priority_nodes, (d) => d.length) +
@@ -553,7 +553,7 @@ function hivtrace_cluster_complete_clusters(nodes, edges, edge_filter) {
       adjacency[nodes[e.target].id].push([nodes[e.source], e]);
     } catch {
       throw Error(
-        "Edge does not map to an existing node " + e.source + " to " + e.target
+        (__("general")["edge_no_node"] || "Edge does not map to an existing node ") + e.source + " to " + e.target
       );
     }
   });
@@ -752,7 +752,7 @@ while (len--) {
         adjacency[nodes[e.target].id].push([nodes[e.source], e]);
       } catch {
         throw Error(
-          "Edge does not map to an existing node " +
+          (__("general")["edge_no_node"] || "Edge does not map to an existing node ") +
             e.source +
             " to " +
             e.target

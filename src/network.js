@@ -167,7 +167,7 @@ function handle_cluster_click(self, cluster, release) {
       .append("li")
       .append("a")
       .attr("tabindex", "-1")
-      .text("Expand cluster")
+      .text(__("network_tab")["expand_cluster"])
       .on("click", (d) => {
         cluster.fixed = 0;
         self.expand_cluster_handler(cluster, true);
@@ -178,7 +178,7 @@ function handle_cluster_click(self, cluster, release) {
       .append("li")
       .append("a")
       .attr("tabindex", "-1")
-      .text("Center on screen")
+      .text(__("network_tab")["center_on_screen"])
       .on("click", (d) => {
         cluster.fixed = 0;
         center_cluster_handler(self, cluster);
@@ -190,8 +190,8 @@ function handle_cluster_click(self, cluster, release) {
       .append("a")
       .attr("tabindex", "-1")
       .text((d) => {
-        if (cluster.fixed) return "Allow cluster to float";
-        return "Hold cluster at current position";
+        if (cluster.fixed) return __("network_tab")["allow_float"];
+        return __("network_tab")["hold_position"];
       })
       .on("click", (d) => {
         cluster.fixed = !cluster.fixed;
@@ -203,7 +203,7 @@ function handle_cluster_click(self, cluster, release) {
         .append("li")
         .append("a")
         .attr("tabindex", "-1")
-        .text((d) => "Show this cluster in separate tab")
+        .text((d) => __("network_tab")["show_separate_tab"])
         .on("click", (d) => {
           self.open_exclusive_tab_view(
             cluster.cluster_id,
@@ -220,7 +220,7 @@ function handle_cluster_click(self, cluster, release) {
         .append("li")
         .append("a")
         .attr("tabindex", "-1")
-        .text((d) => "Add this cluster to the cluster of interest")
+        .text((d) => __("network_tab")["add_to_cluster_interest"])
         .on("click", (d) => {
           clustersOfInterest
             .get_editor()
@@ -239,13 +239,13 @@ function handle_cluster_click(self, cluster, release) {
         .append("li")
         .append("a")
         .attr("tabindex", "-1")
-        .text("Show on map")
+        .text(__("network_tab")["show_on_map"])
         .on("click", (d) => {
           //console.log(cluster)
           self.open_exclusive_tab_view(
             cluster.cluster_id,
             null,
-            (cluster_id) => "Map of cluster: " + cluster_id,
+            (cluster_id) => (__("network_tab")["map_of_cluster"] || "Map of cluster: ") + cluster_id,
             { showing_on_map: true }
           );
         });

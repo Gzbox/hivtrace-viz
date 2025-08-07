@@ -26,7 +26,7 @@ function init(self) {
       window.addEventListener("beforeunload", (e) => {
         if (self.priority_groups_pending() > 0) {
           e.preventDefault();
-          return "There are clusters of interest that have not been confirmed. Closing the window now will not finalize their creation.";
+          return __("general")["unsaved_clusters_warning"] || "There are clusters of interest that have not been confirmed. Closing the window now will not finalize their creation.";
         }
         return null;
       });
@@ -127,7 +127,7 @@ function open_editor(
 
   priority_set_editor = jsPanel.create({
     theme: "bootstrap-primary",
-    headerTitle: "Priority node set editor",
+    headerTitle: __("general")["priority_set_editor"] || "Priority node set editor",
     headerControls: { size: "lg", maximize: "remove" },
     position: {
       my: "center",
@@ -181,7 +181,7 @@ function open_editor(
       form_grp
         .append("input")
         .classed("form-control input-sm", true)
-        .attr("placeholder", "Add node by ID")
+        .attr("placeholder", __("general")["add_node_by_id"] || "Add node by ID")
         .attr("data-hivtrace-ui-role", "priority-panel-nodeids");
 
       var submit_button = form
@@ -200,7 +200,7 @@ function open_editor(
         .classed("alert alert-warning", true)
         .style("display", "inline")
         .text(
-          "At this time, only nodes that cluster in the network at the 1.5% or 0.5% genetic distance threshold level are available for selection."
+          __("clusters_tab")["nodes_selection_limitation"] || "At this time, only nodes that cluster in the network at the 1.5% or 0.5% genetic distance threshold level are available for selection."
         );
       //var preview_grp = form.append ("div").classed ("form-group", true);
 
@@ -221,14 +221,14 @@ function open_editor(
       var grp_name_button = grp_name
         .append("input")
         .classed("form-control input-sm", true)
-        .attr("placeholder", "Name this cluster of interest")
+        .attr("placeholder", __("clusters_tab")["name_cluster"])
         .attr("data-hivtrace-ui-role", "priority-panel-name")
         .attr("maxlength", 100);
 
       var grp_name_box_label = grp_name
         .append("p")
         .classed("help-block", true)
-        .text("Name this cluster of interest");
+        .text(__("clusters_tab")["name_cluster"]);
 
       var grp_kind = form_save.append("div").classed("form-group", true);
 
@@ -241,7 +241,7 @@ function open_editor(
         grp_kind_select.property("disabled", true);
         grp_kind_select.attr(
           "title",
-          "The method of cluster identification cannot be changed for system generated cluster of interest. However, after confirming this cluster of interest, you can clone it and then change this field as needed"
+          __("clusters_tab")["method_cannot_change_system"] || "The method of cluster identification cannot be changed for system generated cluster of interest. However, after confirming this cluster of interest, you can clone it and then change this field as needed"
         );
       } else {
         grp_kind_select.attr("title", null);
@@ -251,7 +251,7 @@ function open_editor(
         grp_name_button.property("disabled", true);
         grp_name_button.attr(
           "title",
-          "The name cannot be changed for system generated cluster of interest. However, after confirming this cluster of interest, you can clone it and then change this field as needed"
+          __("clusters_tab")["name_cannot_change_system"] || "The name cannot be changed for system generated cluster of interest. However, after confirming this cluster of interest, you can clone it and then change this field as needed"
         );
       } else {
         grp_name_button.attr("title", null);
@@ -268,7 +268,7 @@ function open_editor(
       grp_kind
         .append("p")
         .classed("help-block", true)
-        .text("Cluster identification method");
+        .text(__("clusters_tab")["identification_method"]);
 
       var grp_tracking = form_save.append("div").classed("form-group", true);
 
@@ -281,7 +281,7 @@ function open_editor(
         grp_tracking_select.property("disabled", true);
         grp_tracking_select.attr(
           "title",
-          "The method of tracking cannot be changed for existing clusters (system generated or manual). However, you can clone this cluster of interest and then change this field as needed"
+          __("clusters_tab")["tracking_cannot_change_existing"] || "The method of tracking cannot be changed for existing clusters (system generated or manual). However, you can clone this cluster of interest and then change this field as needed"
         );
       } else {
         grp_tracking_select.attr("title", null);
@@ -301,20 +301,20 @@ function open_editor(
       grp_tracking
         .append("p")
         .classed("help-block", true)
-        .text("Method of tracking cluster of interest growth");
+        .text(__("clusters_tab")["tracking_method"]);
 
       var grp_desc = form_save.append("div").classed("form-group", true);
 
       grp_desc
         .append("textarea")
         .classed("form-control input-sm", true)
-        .attr("placeholder", "Cluster of Interest Description")
+        .attr("placeholder", __("general")["cluster_description"] || "Cluster of Interest Description")
         .attr("data-hivtrace-ui-role", "priority-panel-description")
         .text(description);
       grp_desc
         .append("p")
         .classed("help-block", true)
-        .text("Describe this cluster of interest");
+        .text(__("clusters_tab")["describe_cluster"]);
 
       panel_object.first_save = true;
       panel_object.cleanup_attributes = function () {
@@ -413,7 +413,7 @@ function open_editor(
                 });
                 if (
                   confirm(
-                    'This cluster of interest does not include all the nodes in the current network that are eligible for membership by growth criterion  "' +
+                    (__("general")["coi_does_not_include_eligible"] || 'This cluster of interest does not include all the nodes in the current network that are eligible for membership by growth criterion  "') +
                       tracking +
                       '". These ' +
                       self.unique_entity_list(added_node_objects).length +
@@ -473,7 +473,7 @@ function open_editor(
       var save_set_button = form
         .append("button")
         .classed("btn btn-primary btn-sm pull-right", true)
-        .text(validation_mode === "validate" ? "Review & Save" : "Save")
+        .text(validation_mode === "validate" ? __("clusters_tab")["review_save"] : __("clusters_tab")["save"])
         .attr("disabled", "disabled")
         .attr("id", "priority-panel-save")
         .on("click", (e) => {
@@ -484,7 +484,7 @@ function open_editor(
         .append("button")
         .classed("btn btn-info btn-sm pull-right", true)
         .attr("id", "priority-panel-preview")
-        .text("Preview @1.5%")
+        .text(__("clusters_tab")["preview_threshold"].replace("{threshold}", "1.5%"))
         .on("click", (e) => {
           priority_set_view(self, priority_set_editor, {
             "priority-edge-length": 0.015,
@@ -495,7 +495,7 @@ function open_editor(
         .append("button")
         .classed("btn btn-info btn-sm pull-right", true)
         .attr("id", "priority-panel-preview-subcluster")
-        .text("Preview @" + self.subcluster_threshold * 100 + "%")
+        .text(__("clusters_tab")["preview_threshold"].replace("{threshold}", self.subcluster_threshold * 100 + "%"))
         .on("click", (e) => {
           priority_set_view(self, priority_set_editor, {
             "priority-edge-length": self.subcluster_threshold,
@@ -517,7 +517,7 @@ function open_editor(
             "has-error": false,
             "has-warning": false,
           });
-          grp_name_box_label.text("Name this cluster of interest");
+          grp_name_box_label.text(__("clusters_tab")["name_cluster"]);
           if (panel_object.network_nodes.length) {
             save_set_button.attr("disabled", null);
           }
@@ -528,10 +528,10 @@ function open_editor(
             "has-error": true,
           });
           let error_message = too_long
-            ? "MUST be shorter than 36 characters"
-            : "MUST be unique";
+            ? (__("general")["must_be_shorter_36"] || "MUST be shorter than 36 characters")
+                            : (__("general")["must_be_unique"] || "MUST be unique");
           grp_name_box_label.text(
-            "Name this cluster of interest " + error_message
+            (__("general")["name_coi_error"] || "Name this cluster of interest ") + error_message
           );
           save_set_button.attr("disabled", "disabled");
         }
@@ -634,7 +634,7 @@ function open_editor(
       panel_object.can_add_nodes = function () {
         if (created_by !== kGlobals.CDCCOICreatedManually) {
           alert(
-            "Cannot add nodes to system generated clusters of interest. You may clone this cluster of interest and then add nodes to it manually if necessary."
+            __("clusters_tab")["cannot_add_nodes_system"] || "Cannot add nodes to system generated clusters of interest. You may clone this cluster of interest and then add nodes to it manually if necessary."
           );
           return false;
         }
@@ -780,8 +780,8 @@ function open_editor(
   <div class="form-group">
     <div class="input-group"> <textarea class="form-control input-sm" data-hivtrace-ui-role="priority-description-form"
         cols="40" rows="3"></textarea> </div>
-  </div> <button data-hivtrace-ui-role="priority-description-dismiss" class="btn btn-sm btn-default">Cancel</button>
-  <button data-hivtrace-ui-role="priority-description-save" class="btn btn-sm btn-default">Delete</button>
+  </div> <button data-hivtrace-ui-role="priority-description-dismiss" class="btn btn-sm btn-default">${__("general")["cancel"] || "Cancel"}</button>
+  <button data-hivtrace-ui-role="priority-description-save" class="btn btn-sm btn-default">${__("general")["delete"] || "Delete"}</button>
 </form>`;
         };
 
@@ -789,8 +789,8 @@ function open_editor(
           {
             prepend: true,
             description: {
-              value: "Added",
-              help: "When was this person added to the cluster of interest?",
+              value: __("general")["added"] || "Added",
+              help: __("general")["when_person_added_coi"] || "When was this person added to the cluster of interest?",
             },
             generator: function (node) {
               return {
@@ -829,7 +829,7 @@ function open_editor(
                         });
                     }
                   } else {
-                    this_cell.text("N/A");
+                    this_cell.text(__("clusters_tab")["na"]);
                   }
                 },
               };
@@ -838,8 +838,8 @@ function open_editor(
           {
             prepend: true,
             description: {
-              value: "Person identification method",
-              help: "How was this person identified as part of this cluster of interest?",
+              value: __("general")["person_identification_method"] || "Person identification method",
+              help: __("general")["how_person_identified_coi"] || "How was this person identified as part of this cluster of interest?",
             },
             generator: function (node) {
               return {
@@ -852,7 +852,7 @@ function open_editor(
                         //icon: "fa-caret-down",
                         classed: { "btn-default": true },
                         text: value["_priority_set_kind"], //.split(" ")[0],
-                        help: "How was this person identified?",
+                        help: __("general")["how_person_identified"] || "How was this person identified?",
                         dropdown: kGlobals.CDCCOINodeKind,
                         action: function (button, menu_value) {
                           value["_priority_set_kind"] = menu_value;
@@ -943,7 +943,7 @@ function open_editor(
                         handle_inline_confirm(
                           d3.select(this),
                           del_form_generator,
-                          "Are you sure you wish to permanently delete this node from the cluster of interest?",
+                          __("general")["confirm_delete_node_coi"] || "Are you sure you wish to permanently delete this node from the cluster of interest?",
                           (d) => {
                             panel_object.remove_node(payload);
                           },
@@ -1000,7 +1000,7 @@ function open_editor(
       if (!this.saved) {
         if (
           confirm(
-            "Close cluster of interest editor? Unsaved changes will be lost."
+            __("general")["close_coi_editor_warning"] || "Close cluster of interest editor? Unsaved changes will be lost."
           )
         ) {
           if (existing_set) {
@@ -1100,7 +1100,7 @@ function _action_drop_down(self, pg) {
       let items = [
         {
           label:
-            "View this cluster of interest at link distance of " +
+            (__("general")["view_coi_distance"] || "View this cluster of interest at link distance of ") +
             kGlobals.formats.PercentFormatShort(threshold),
           action: function (button, value) {
             priority_set_view(self, pg, {
@@ -1115,7 +1115,7 @@ function _action_drop_down(self, pg) {
       if (self.has_multiple_sequences) {
         items.push({
           label:
-            "View this cluster of interest at link distance of " +
+            (__("general")["view_coi_distance"] || "View this cluster of interest at link distance of ") +
             kGlobals.formats.PercentFormatShort(threshold) +
             " (sequence level)",
           action: function (button, value) {
@@ -1139,7 +1139,7 @@ function _action_drop_down(self, pg) {
 
   if (!self._is_CDC_executive_mode) {
     dropdown.push({
-      label: "Clone this cluster of interest in a new editor panel",
+                label: __("general")["clone_cluster"] || "Clone this cluster of interest in a new editor panel",
       action: function (button, value) {
         let ref_set = self.priority_groups_find_by_name(pg.name);
         let copied_node_objects = _.clone(ref_set.node_objects);
@@ -1148,7 +1148,7 @@ function _action_drop_down(self, pg) {
           self,
           copied_node_objects,
           "",
-          "Clone of " + pg.name,
+          (__("general")["clone_of"] || "Clone of ") + pg.name,
           ref_set.kind
         );
         self.redraw_tables();
@@ -1156,16 +1156,16 @@ function _action_drop_down(self, pg) {
     });
     if (pg.createdBy !== "System") {
       dropdown.push({
-        label: "Delete this cluster of interest",
+                  label: __("general")["delete_cluster"] || "Delete this cluster of interest",
         action: function (button, value) {
-          if (confirm("This action cannot be undone. Proceed?")) {
+          if (confirm(__("clusters_tab")["confirm_irreversible"])) {
             self.priority_groups_remove_set(pg.name, true);
           }
         },
       });
     }
     dropdown.push({
-      label: "View nodes in this cluster of interest",
+                label: __("general")["view_cluster_nodes"] || "View nodes in this cluster of interest",
       data: {
         toggle: "modal",
         target: misc.get_ui_element_selector_by_role("cluster_list"),
@@ -1174,7 +1174,7 @@ function _action_drop_down(self, pg) {
     });
   }
   dropdown.push({
-    label: "Modify this cluster of interest",
+              label: __("general")["modify_cluster"] || "Modify this cluster of interest",
     action: function (button, value) {
       let ref_set = self.priority_groups_find_by_name(pg.name);
 
@@ -1182,7 +1182,7 @@ function _action_drop_down(self, pg) {
         /*if (ref_set.modified.getTime() > self.today.getTime()) {
           if (
             !confirm(
-              "Editing priority sets modified after the point at which this network was created is not recommended."
+              __("general")["editing_priority_sets_warning"] || "Editing priority sets modified after the point at which this network was created is not recommended."
             )
           )
             return;
@@ -1204,13 +1204,13 @@ function _action_drop_down(self, pg) {
   });
 
   /**dropdown.push({
-    label: "View history over time",
+              label: __("general")["view_history"] || "View history over time",
     action: function (button, value) {
       let ref_set = self.priority_groups_find_by_name(pg.name);
       let report = self.generate_coi_temporal_report(ref_set);
       let container = self.open_exclusive_tab_view_aux(
         null,
-        "History of " + pg.name,
+        (__("general")["history_of"] || "History of ") + pg.name,
         {}
       );
       misc.coi_timeseries(
@@ -1241,38 +1241,38 @@ function draw_priority_set_table(self, container, priority_groups) {
     var headers = [
       [
         {
-          value: "Type",
+                      value: __("general")["type"] || "Type",
           sort: function (c) {
             return c.value;
           },
-          help: "How was this cluster of interest created",
+          help: __("general")["how_coi_created"] || "How was this cluster of interest created",
           width: 50,
         },
         {
-          value: "Name",
+                      value: __("general")["name"] || "Name",
           sort: "value",
           filter: true,
           width: 325,
           text_wrap: true,
-          help: "Cluster of interest name",
+          help: __("general")["coi_name"] || "Cluster of interest name",
         },
         {
-          value: "Modified/created",
+                      value: __("general")["modified_created"] || "Modified/created",
           width: 180,
           sort: function (c) {
             return c.value[0];
           },
-          help: "When was the cluster of interest created/last modified",
+                        help: __("general")["when_coi_created_modified"] || "When was the cluster of interest created/last modified",
         },
         {
-          value: "Growth",
+                      value: __("general")["growth"] || "Growth",
           sort: "value",
-          help: "How growth is handled",
+          help: __("general")["how_growth_handled"] || "How growth is handled",
           width: 100,
           //text_wrap: true
         },
         {
-          value: "Size",
+                      value: __("general")["size"] || "Size",
           width: 100,
           presort: "desc",
           sort: function (c) {
@@ -1282,22 +1282,22 @@ function draw_priority_set_table(self, container, priority_groups) {
             }
             return 0;
           },
-          help: "Number of nodes in the cluster of interest",
+          help: __("general")["nodes_in_coi"] || "Number of nodes in the cluster of interest",
         },
         {
-          value: "Priority",
+                      value: __("general")["priority"] || "Priority",
           width: 60,
           sort: "value",
-          help: "Does the cluster of interest continue to meet priority criteria?",
+                        help: __("general")["does_coi_meet_priority"] || "Does the cluster of interest continue to meet priority criteria?",
         },
         {
-          value: "DXs in last 12 mo.",
+                      value: __("general")["dxs_last_12_months"] || "DXs in last 12 mo.",
           width: 50,
           sort: "value",
-          help: "The number of cases in the cluster of interest diagnosed in the past 12 months",
+                        help: __("general")["number_cases_12_months_coi"] || "The number of cases in the cluster of interest diagnosed in the past 12 months",
         },
         {
-          value: "Overlap",
+                      value: __("general")["overlap"] || "Overlap",
           width: 140,
           sort: function (c) {
             c = c.value;
@@ -1306,25 +1306,25 @@ function draw_priority_set_table(self, container, priority_groups) {
             }
             return 0;
           },
-          help: "How many other ClusterOI have overlapping nodes with this ClusterOI, and (if overlapping ClusterOI exist) how many nodes in this ClusterOI overlap with ANY other ClusterOI?",
+                        help: __("general")["overlapping_clusteroi_help"] || "How many other ClusterOI have overlapping nodes with this ClusterOI, and (if overlapping ClusterOI exist) how many nodes in this ClusterOI overlap with ANY other ClusterOI?",
         },
         /*,
           {
-            value: "Cluster",
+            value: __("general")["cluster"] || "Cluster",
             sort: "value",
-            help: "Which cluster does the node belong to"
+            help: __("general")["which_cluster"] || "Which cluster does the node belong to"
           }*/
       ],
     ];
 
     if (self._is_CDC_auto_mode) {
       headers[0].splice(3, 0, {
-        value: "clusterOI identification method",
+        value: __("general")["cluster_identification_method"] || "clusterOI identification method",
         width: 100,
         sort: function (c) {
           return c.value;
         },
-        help: "Method of cluster identification",
+        help: __("general")["method_cluster_identification"] || "Method of cluster identification",
       });
     }
 
@@ -1335,8 +1335,8 @@ function draw_priority_set_table(self, container, priority_groups) {
                           <textarea class="form-control input-sm" data-hivtrace-ui-role = "priority-description-form" cols = "40" rows = "3"></textarea>
                           </div>
                       </div>
-                      <button data-hivtrace-ui-role = "priority-description-dismiss" class = "btn btn-sm btn-default">Dismiss</button>
-                      <button data-hivtrace-ui-role = "priority-description-save" class = "btn btn-sm btn-default">Save</button>
+                      <button data-hivtrace-ui-role = "priority-description-dismiss" class = "btn btn-sm btn-default">${__("general")["dismiss"] || "Dismiss"}</button>
+                      <button data-hivtrace-ui-role = "priority-description-save" class = "btn btn-sm btn-default">${__("general")["save"] || "Save"}</button>
                   </form>`;
     };
 
@@ -1367,17 +1367,17 @@ function draw_priority_set_table(self, container, priority_groups) {
           width: 325,
           help:
             pg.description +
-            (pg.pending ? " (new, pending confirmation)" : "") +
+            (pg.pending ? " (" + (__("general")["new_pending_confirmation"] || "new, pending confirmation") + ")" : "") +
             (pg.expanded
-              ? " (" + pg.expanded + " new nodes; pending confirmation)"
+              ? " (" + pg.expanded + " " + (__("general")["new_nodes_pending_confirmation"] || "new nodes; pending confirmation") + ")"
               : ""),
           volatile: true,
           format: (value) =>
             "<div style = 'white-space: nowrap; overflow: hidden; text-overflow : ellipsis;'>" +
             (pg.autocreated || pg.autoexpanded
               ? (pg.autoexpanded
-                  ? '<span class="label label-default">Grew</span>'
-                  : '<span class="label label-danger">New</span>') +
+                                  ? '<span class="label label-default">' + (__("general")["grew"] || "Grew") + '</span>'
+                : '<span class="label label-danger">' + (__("general")["new"] || "New") + '</span>') +
                 "&nbsp;<span style = 'font-weight: 900;' data-text-export = '" +
                 value +
                 "'>" +
@@ -1434,7 +1434,7 @@ function draw_priority_set_table(self, container, priority_groups) {
               return (
                 v[0] +
                 (v[1]
-                  ? ' <span title="Number of nodes added by the system since the last network update" class="label label-default">' +
+                  ? ' <span title="' + (__("general")["nodes_added_since_update"] || "Number of nodes added by the system since the last network update") + '" class="label label-default">' +
                     v[1] +
                     " new</span>"
                   : "")
@@ -1447,7 +1447,7 @@ function draw_priority_set_table(self, container, priority_groups) {
         {
           // meets priority definition
           width: 60,
-          value: pg.meets_priority_def ? "Yes" : "No",
+          value: pg.meets_priority_def ? (__("general")["yes"] || "Yes") : (__("general")["no"] || "No"),
         },
         {
           width: 50,
@@ -1466,23 +1466,23 @@ function draw_priority_set_table(self, container, priority_groups) {
               return (
                 String(v[0]) +
                 (v[1]
-                  ? ' <span title="Number of persons in the overlap" class="label label-default pull-right">' +
+                  ? ' <span title="' + (__("general")["persons_in_overlap"] || "Number of persons in the overlap") + '" class="label label-default pull-right">' +
                     v[1] +
                     " persons</span>"
                   : "") +
                 (v[2].length
-                  ? ' <span title="clusterOIs which are exact duplicates of this clusterOI: ' +
+                  ? ' <span title="' + (__("general")["exact_duplicates_tooltip"] || "clusterOIs which are exact duplicates of this clusterOI: ") +
                     v[2].join(", ") +
                     '" class="label label-danger pull-right">' +
                     v[2].length +
-                    " duplicate clusterOI</span>"
+                    " " + (__("general")["duplicate_clusteroi"] || "duplicate clusterOI") + "</span>"
                   : "") +
                 (v[3].length
-                  ? ' <span title="clusterOIs which contain this clusterOI: ' +
+                  ? ' <span title="' + (__("general")["contains_clusteroi_tooltip"] || "clusterOIs which contain this clusterOI: ") +
                     v[3].join(", ") +
-                    '" class="label label-warning pull-right">Fully contained in ' +
+                    '" class="label label-warning pull-right">' + (__("general")["fully_contained_in"] || "Fully contained in") + " " +
                     v[3].length +
-                    " clusterOI</span>"
+                    " " + (__("general")["clusteroi"] || "clusterOI") + "</span>"
                   : "")
               );
             }
@@ -1497,7 +1497,7 @@ function draw_priority_set_table(self, container, priority_groups) {
                     icon: "fa-eye",
                     dropdown: [
                       {
-                        label: "List overlaps",
+                        label: __("general")["list_overlaps"] || "List overlaps",
                         data: {
                           toggle: "modal",
                           target:
@@ -1533,13 +1533,13 @@ function draw_priority_set_table(self, container, priority_groups) {
         this_row[1].actions = [
           {
             icon: "fa-eye",
-            help: "Review and adjust this cluster of interest",
+            help: __("general")["review_adjust_coi"] || "Review and adjust this cluster of interest",
             action: function (button, value) {
               let nodeset = self.priority_groups_find_by_name(value);
               if (nodeset) {
                 if (get_editor()) {
                   alert(
-                    "Cannot confirm a cluster of interest while an editor window is open"
+                    __("general")["cannot_confirm_coi"] || "Cannot confirm a cluster of interest while an editor window is open"
                   );
                 } else {
                   open_editor(
@@ -1568,7 +1568,7 @@ function draw_priority_set_table(self, container, priority_groups) {
           {
             icon: "fa-info-circle",
             classed: { "view-edit-cluster": true },
-            help: "View/edit this cluster of interest",
+                          help: __("general")["view_edit_coi"] || "View/edit this cluster of interest",
             dropdown: _action_drop_down(self, pg),
             /*action: function (button, menu_value) {
                 console.log (menu_value);
@@ -1577,7 +1577,7 @@ function draw_priority_set_table(self, container, priority_groups) {
           {
             icon: "fa-edit",
             classed: { "btn-info": true },
-            help: "Edit description",
+            help: __("general")["edit_description"] || "Edit description",
             action: function (this_button, cv) {
               handle_inline_confirm(
                 this_button,
@@ -1597,7 +1597,7 @@ function draw_priority_set_table(self, container, priority_groups) {
             if (get_editor()) {
               return {
                 icon: "fa-plus",
-                help: "Add nodes in this cluster of interest to the new cluster of interest",
+                help: __("general")["add_coi_nodes"] || "Add nodes in this cluster of interest to the new cluster of interest",
                 action: function (button, value) {
                   let nodeset = self.priority_groups_find_by_name(value);
                   if (nodeset) {
@@ -1618,7 +1618,7 @@ function draw_priority_set_table(self, container, priority_groups) {
             text: String(pg.not_in_network.length) + " removed",
             classed: { "btn-danger": true, disabled: true },
             help:
-              "Nodes removed from the network: " + pg.not_in_network.join(", "),
+              (__("general")["nodes_removed_from_network"] || "Nodes removed from the network: ") + pg.not_in_network.join(", "),
           },
         ];
       }
@@ -1639,10 +1639,10 @@ function draw_priority_set_table(self, container, priority_groups) {
       };
 
       has_required_actions =
-        '<div class="alert alert-info">There are ' +
-        "<span style = 'color: darkred'>" + labeler(has_automatic, "automatically created") + "</span>" +
-        "<span style = 'color: orange'>" + labeler(has_expanded, "automatically expanded", has_automatic) + "</span>" +
-        ' priority sets.</div>';
+        '<div class="alert alert-info">' + (__("general")["there_are"] || "There are") + ' ' +
+              "<span style = 'color: darkred'>" + labeler(has_automatic, __("general")["automatically_created"] || "automatically created") + "</span>" +
+      "<span style = 'color: orange'>" + labeler(has_expanded, __("general")["automatically_expanded"] || "automatically expanded", has_automatic) + "</span>" +
+        ' ' + (__("general")["priority_sets"] || "priority sets") + '.</div>';
     } else {
       has_required_actions = "";
     }*/
@@ -1653,9 +1653,9 @@ function draw_priority_set_table(self, container, priority_groups) {
       rows,
       true,
       has_required_actions +
-        `Showing <span class="badge" data-hivtrace-ui-role="table-count-shown">--</span>/<span class="badge" data-hivtrace-ui-role="table-count-total">--</span> clusters of interest.
-          <button class = "btn btn-sm btn-warning pull-right" data-hivtrace-ui-role="priority-subclusters-export">Export to JSON</button>
-          <button class = "btn btn-sm btn-primary pull-right" data-hivtrace-ui-role="priority-subclusters-export-csv">Export to CSV</button>`,
+        (__("general")["showing"] || "Showing") + ` <span class="badge" data-hivtrace-ui-role="table-count-shown">--</span>/<span class="badge" data-hivtrace-ui-role="table-count-total">--</span> ` + (__("general")["clusters_of_interest_text"] || "clusters of interest") + `.
+          <button class = "btn btn-sm btn-warning pull-right" data-hivtrace-ui-role="priority-subclusters-export">${__("general")["export_to_json"] || "Export to JSON"}</button>
+          <button class = "btn btn-sm btn-primary pull-right" data-hivtrace-ui-role="priority-subclusters-export-csv">${__("general")["export_to_csv"] || "Export to CSV"}</button>`,
       get_editor()
     );
 
@@ -1768,26 +1768,26 @@ function priority_set_view(self, priority_set, options) {
         } else if (i === pgDates.length - maxColors) {
           dateID[d] = viewEnum.length;
           viewEnum.push(
-            "In cluster of interest (added on or before " + d + ")"
+            (__("general")["in_coi_added_before"] || "In cluster of interest (added on or before ") + d + ")"
           );
           return;
         }
       }
       dateID[d] = viewEnum.length;
-      viewEnum.push("In cluster of interest (added " + d + ")");
+              viewEnum.push((__("general")["in_coi_added"] || "In cluster of interest (added ") + d + ")");
     }
   });
 
   let priorityColorOffset = viewEnum.length;
 
-  viewEnum.push("Diagnosed and in network before " + refDate);
+      viewEnum.push((__("general")["diagnosed_before"] || "Diagnosed and in network before ") + refDate);
   viewEnum.push(
-    "Diagnosed or in network on or after " +
+    (__("general")["diagnosed_after"] || "Diagnosed or in network on or after ") +
       refDate +
       " [directly linked to cluster of interest]"
   );
   viewEnum.push(
-    "Diagnosed or in network on or after " +
+    (__("general")["diagnosed_after"] || "Diagnosed or in network on or after ") +
       refDate +
       " [indirectly linked to cluster of interest]"
   );
@@ -1827,7 +1827,7 @@ function priority_set_view(self, priority_set, options) {
         "computed-attributes": {
           date_added: {
             depends: [timeDateUtil._networkCDCDateField],
-            label: "Date added to cluster of interest",
+            label: __("general")["date_added_to_cluster"] || "Date added to cluster of interest",
             type: "Date",
             map: function (node) {
               return node.id in node_dates
@@ -1837,7 +1837,7 @@ function priority_set_view(self, priority_set, options) {
           },
           priority_set: {
             depends: [timeDateUtil._networkCDCDateField],
-            label: "Cluster of Interest Status",
+            label: __("general")["cluster_status"] || "Cluster of Interest Status",
             enum: viewEnum,
             type: "String",
             map: function (node) {
@@ -1910,10 +1910,10 @@ function priority_groups_add_set(
       nodeset.name[0] === " " ||
       nodeset.name[nodeset.name.length - 1] === " "
     ) {
-      alert(
-        "Cluster of interest '" +
+              alert(
+        (__("general")["cluster_of_interest_label"] || "Cluster of interest '") +
           nodeset.name +
-          "' has spaces either at the beginning or end of the name. Secure HIV-TRACE does not allow names that start or end with spaces."
+          (__("general")["has_spaces_warning"] || "' has spaces either at the beginning or end of the name. Secure HIV-TRACE does not allow names that start or end with spaces.")
       );
       return true;
     }
@@ -1924,16 +1924,16 @@ function priority_groups_add_set(
           d.nodes.filter((x) => my_nodes.has(x.name)).length === d.nodes.length;
         if (same_nodes && d.tracking === nodeset.tracking) {
           alert(
-            "Cluster of interest '" +
+            (__("general")["cluster_of_interest_label"] || "Cluster of interest '") +
               d.name +
-              "' has the same set of nodes and the same growth criterion as this new cluster of interest. Secure HIV-TRACE does not allow creating exact duplicates of clusters of interest."
+              (__("general")["same_nodes_criterion_warning"] || "' has the same set of nodes and the same growth criterion as this new cluster of interest. Secure HIV-TRACE does not allow creating exact duplicates of clusters of interest.")
           );
           return true;
         } else if (same_nodes) {
           let keep_duplicate = confirm(
-            "Warning! Cluster of interest '" +
+            (__("general")["warning"] || "Warning") + "! " + (__("general")["cluster_of_interest"] || "Cluster of interest") + " '" +
               d.name +
-              "' has the same set of nodes as this cluster of interest, but a different growth criterion'. Click 'OK' to create, or 'Cancel' to abort."
+              (__("general")["same_nodes_different_criterion"] || "' has the same set of nodes as this cluster of interest, but a different growth criterion'. Click 'OK' to create, or 'Cancel' to abort.")
           );
           let is_duplicate = !keep_duplicate;
           return is_duplicate;

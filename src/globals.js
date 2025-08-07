@@ -325,7 +325,7 @@ CDCCOIConciseTrackingOptions[CDCCOITrackingOptions[1]] = "0.5% distance";
 CDCCOIConciseTrackingOptions[CDCCOITrackingOptions[2]] =
   "3 years, 1.5% distance";
 CDCCOIConciseTrackingOptions[CDCCOITrackingOptions[3]] = "1.5% distance";
-CDCCOIConciseTrackingOptions[CDCCOITrackingOptions[4]] = "None";
+CDCCOIConciseTrackingOptions[CDCCOITrackingOptions[4]] = __("general")["none_uppercase"] || "None";
 
 /**
     CDCCOIConciseTrackingOptions:
@@ -481,7 +481,7 @@ const CDCCOINodeKindDefault = CDCCOINodeKind[0];
     The method of node identification used by default (and it automatically created COI)
 */
 
-const CDCNPMember = "Ever in national priority clusterOI?";
+const CDCNPMember = __("general")["national_priority_label"];
 
 /**
     CDCNPMember:
@@ -514,9 +514,9 @@ const formats = {
 const network = {
   GraphAttrbuteID: "patient_attribute_schema",
   NodeAttributeID: "patient_attributes",
-  ReducedValue: "Different (other) value",
+  ReducedValue: "[DIFFERENT VALUE]",
   ContinuousColorStops: 9,
-  WarnExecutiveMode: "This feature is not available in the executive mode.",
+  WarnExecutiveMode: __("general")["executive_mode_warning"] || "This network is being viewed in executive mode, which substantially reduces the amount of visible information. Click <here> to switch to full mode.",
   AliasedSequencesID: "aliased_sequences",
 };
 

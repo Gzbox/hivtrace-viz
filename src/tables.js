@@ -121,7 +121,7 @@ function add_a_sortable_table(
       table_caption
         .select(misc.get_ui_element_selector_by_role("table-count-warning"))
         .style("color", "black")
-        .text("Truncated due to the large number of rows (" + N + ")");
+        .text(__("general")["truncated_rows"].replace("{count}", N));
     }
   }
 
@@ -191,7 +191,7 @@ function format_a_cell(data, index, item, priority_set_editor) {
           .style("margin-left", "0.2em")
           .attr(
             "title",
-            "Add currently visible nodes to the Cluster of Interest"
+            __("general")["add_visible_nodes_to_coi"]
           );
 
         add_to_ps.on("click", (d) => {
@@ -231,7 +231,7 @@ function format_a_cell(data, index, item, priority_set_editor) {
         return `<form class="form-inline" data-hivtrace-ui-role = "table-filter-form"> 
                             <div class="form-group"> 
                                 <div class="input-group">
-                                <input type="text" class="form-control input-sm" data-hivtrace-ui-role = "table-filter-term" placeholder="Filter On" style = "min-width: 100px">
+                                <input type="text" class="form-control input-sm" data-hivtrace-ui-role = "table-filter-term" placeholder="' + (__("general")["filter_on"] || "Filter On") + '" style = "min-width: 100px">
                                 <div class="input-group-addon"><a data-hivtrace-ui-role = "table-filter-reset"><i class="fa fa-times-circle"></i></a> </div>
                                 <div class="input-group-addon"><a data-hivtrace-ui-role = "table-filter-apply"><i class="fa fa-filter"></i></a> </div> 
                                 <div class="input-group-addon">
@@ -246,19 +246,7 @@ function format_a_cell(data, index, item, priority_set_editor) {
             index +
             '">
                           <div class="well">
-                            Type in text to select columns which 
-                            <em>contain the term</em>. <br />
-                            For example, typing in <code>MSM</code> will select rows
-                            that have "MSM" as a part of the column value.
-                            <p />
-                            Type in space separated terms (<code>MSM IDU</code>) to
-                            search for <b>either</b> term. <p/>
-                            Type in terms in quotes (<code>"male"</code>) to search
-                            for this <b>exact</b> term. <p/>
-                            If columns have date information you can use
-                            <code>YYYYMMDD:YYYYMMDD</code> to search for date ranges.<p/>
-                            Use <code>&lt;value</code> or <code>&gt;value</code>
-                            to search numerical columns<p/>
+                            ' + (__("network_tab")["search_help"] || 'Type in text to select columns which <em>contain the term</em>. <br /> For example, typing in <code>MSM</code> will select rows that have "MSM" as a part of the column value. <p /> Type in space separated terms (<code>MSM IDU</code>) to search for <b>either</b> term. <p/> Type in terms in quotes (<code>"male"</code>) to search for this <b>exact</b> term. <p/> If columns have date information you can use <code>YYYYMMDD:YYYYMMDD</code> to search for date ranges.<p/> Use <code>&lt;value</code> or <code>&gt;value</code> to search numerical columns<p/>') + '
                           </div>
                         </div>
                         `;

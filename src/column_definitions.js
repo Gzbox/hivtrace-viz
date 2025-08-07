@@ -80,7 +80,7 @@ function secure_hiv_trace_subcluster_columns(self) {
        */
     {
       description: {
-        value: "Cases dx within 36 months",
+        value: __("general")["cases_dx_36_months"] || "Cases dx within 36 months",
         sort: function (c) {
           return c.value.length
             ? d3.max(
@@ -91,7 +91,7 @@ function secure_hiv_trace_subcluster_columns(self) {
               )
             : 0;
         },
-        help: "Number of cases diagnosed in the past 36 months connected only through cases diagnosed within the past 36 months",
+                    help: __("general")["cases_36_months"] || "Number of cases diagnosed in the past 36 months connected only through cases diagnosed within the past 36 months",
       },
       generator: function (cluster) {
         return {
@@ -132,7 +132,7 @@ function secure_hiv_trace_subcluster_columns(self) {
                   }
                   return false;
                 },
-                help: "Add to cluster of interest",
+                help: __("general")["add_to_cluster_help"],
               };
             });
           },
@@ -149,7 +149,7 @@ function secure_hiv_trace_subcluster_columns(self) {
 
     {
       description: {
-        value: "Cases dx within 12 months",
+        value: __("general")["cases_dx_12_months"] || "Cases dx within 12 months",
         //"value",
         sort: function (c) {
           const v = c.value || [];
@@ -160,7 +160,7 @@ function secure_hiv_trace_subcluster_columns(self) {
             : 0;
         },
         presort: "desc",
-        help: "Number of cases diagnosed in the past 12 months connected only through cases diagnosed within the past 36 months",
+                    help: __("general")["cases_12_months"] || "Number of cases diagnosed in the past 12 months connected only through cases diagnosed within the past 36 months",
       },
       generator: function (cluster) {
         const definition = {
@@ -196,7 +196,7 @@ function secure_hiv_trace_subcluster_columns(self) {
               _.map(cluster.priority_score, (c) => ({
                 icon: "fa-question",
                 help:
-                  "Do some of these " +
+                  (__("general")["do_some_of_these"] || "Do some of these ") +
                   c.length +
                   " nodes belong to a cluster of interest?",
                 action: function (this_button, cv) {
@@ -248,7 +248,7 @@ function secure_hiv_trace_subcluster_columns(self) {
                         if (check_membership.length === 0) {
                           check_membership = [
                             [
-                              "No nodes belong to any cluster of interest or are linked to any of the clusters of interest.",
+                              __("general")["no_nodes_belong_coi"] || "No nodes belong to any cluster of interest or are linked to any of the clusters of interest.",
                             ],
                           ];
                         } else {
@@ -330,7 +330,7 @@ function secure_hiv_trace_subcluster_columns(self) {
                     }
                     return false;
                   },
-                  help: "Add to cluster of interest",
+                  help: __("general")["add_to_cluster_help"],
                 };
               })
             );

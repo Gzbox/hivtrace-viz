@@ -25,7 +25,7 @@ function hivtrace_histogram(graph, histogram_tag, histogram_label) {
   );
 
   var label =
-    "Network degree distribution is best described by the <strong>" +
+          (__("statistics")["network_degree_distribution"] || "Network degree distribution is best described by the <strong>") +
     graph["Degrees"]["Model"] +
     "</strong> model, with &rho; of " +
     defaultFloatFormat(graph["Degrees"]["rho"]);
@@ -168,7 +168,7 @@ function hivtrace_render_histogram_continuous(data, w, h, id) {
       .attr("y", 0 - margin.left + y_axis_label_width)
       .attr("x", 0 - height / 2)
       .style("text-anchor", "middle")
-      .text("Edges");
+      .text(__("statistics")["edges_label"]);
 
     var x_axis_label = histogram_svg // eslint-disable-line
       .append("text")
@@ -177,7 +177,7 @@ function hivtrace_render_histogram_continuous(data, w, h, id) {
         "translate(" + width / 2 + " ," + (height + margin.top + 20) + ")"
       )
       .style("text-anchor", "middle")
-      .text("Genetic Distance");
+      .text(__("statistics")["genetic_distance"]);
 
     var y_axis = histogram_svg // eslint-disable-line
       .append("g")

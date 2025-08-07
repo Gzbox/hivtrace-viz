@@ -105,11 +105,11 @@ function hivtraceClusterGraphSummary(network, tag, not_CDC) {
 
   if (network.has_multiple_sequences) {
     table_data.push([
-      "Persons with >1 sequence",
+      __("statistics")["persons_with_multiple_sequences"],
       _.filter(network.primary_key_list, (d, k) => d.length > 1).length,
     ]);
     table_data.push([
-      "Persons in multiple clusters",
+      __("statistics")["persons_in_multiple_clusters"],
       _.size(network.entities_in_multiple_clusters),
     ]);
   }
@@ -120,7 +120,7 @@ function hivtraceClusterGraphSummary(network, tag, not_CDC) {
     degrees = helpers.describe_vector(_.map(graph["Edges"], (e) => e.length));
 
     // Add edge length statistics to table data
-    table_data.push(["Genetic distances (links only)", ""]);
+    table_data.push([__("statistics")["genetic_distances_links_only"] || "Genetic distances (links only)", ""]);
     table_data.push([
       "&nbsp;&nbsp;<i>" + __("statistics")["mean"] + "</i>",
       _defaultPercentFormat(degrees["mean"]),
