@@ -4461,23 +4461,23 @@ var hivtrace_cluster_network_graph = function (
       const networkString =
         "<span class = 'badge'>" +
         self.clusters.length +
-        "</span> clusters <span class = 'label label-primary'>" +
+        "</span> " + (__("statistics")["clusters"] || "clusters") + " <span class = 'label label-primary'>" +
         clusters_shown +
-        " expanded / " +
+        " " + (__("network_tab")["expanded"] || "expanded") + " / " +
         clusters_selected +
-        " match </span> <span class = 'badge'> " +
+        " " + (__("network_tab")["match"] || "match") + " </span> <span class = 'badge'> " +
         self.nodes.length +
-        "</span> nodes <span class = 'label label-primary'>" +
+        "</span> " + (__("statistics")["nodes"] || "nodes") + " <span class = 'label label-primary'>" +
         node_count +
-        " shown / " +
+        " " + (__("network_tab")["shown"] || "shown") + " / " +
         nodes_selected +
-        " match </span> <span class = 'badge'> " +
+        " " + (__("network_tab")["match"] || "match") + " </span> <span class = 'badge'> " +
         self.edges.length +
         "</span> " +
-        (self._is_CDC_ ? "links" : "edges") +
+        (self._is_CDC_ ? (__("statistics")["edges"] || "links") : (__("statistics")["edges"] || "edges")) +
         " <span class = 'label label-primary'>" +
         edge_count +
-        " shown</span>";
+        " " + (__("network_tab")["shown"] || "shown") + "</span>";
 
       d3.select(network_status_string).html(networkString);
     }
@@ -7610,7 +7610,7 @@ var hivtrace_cluster_network_graph = function (
             if (edge_class.length) {
               link = element
                 .append("a")
-                .text(edge_class + " links")
+                .text(edge_class + " " + (__("statistics")["edges"] || "links"))
                 .style("color", network._edge_colorizer(edge_class))
                 .on("click", toggle_element);
             } else {

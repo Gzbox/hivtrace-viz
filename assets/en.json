@@ -358,7 +358,10 @@
     "molecular_links": "Molecular links",
     "show_time_plots": "Show time-course plots",
     "hide_time_plots": "Hide time-course plots",
-    "read_only": "Read-only"
+    "read_only": "Read-only",
+    "expanded": "expanded",
+    "match": "match",
+    "shown": "shown"
   },
   "clusters_main": {
     "search_text_in_attributes": "Search text in attributes",
