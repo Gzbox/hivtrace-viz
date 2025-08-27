@@ -6592,7 +6592,7 @@ var hivtrace_cluster_network_graph = function (
         "Degree <em>" +
         n.degree +
         "</em><br>Clustering coefficient <em> " +
-        misc.format_value(n.lcc, kGlobals.formats.FloatFormat) +
+        kGlobals.formats.FloatFormat(n.lcc) +
         "</em>";
     } else {
       str = "# links <em>" + n.degree + "</em>";
@@ -7190,7 +7190,7 @@ var hivtrace_cluster_network_graph = function (
         the_cluster.degrees["max"] +
         "</em>" +
         "<br>Clustering coefficient <em> " +
-        misc.format_value(the_cluster.cc, kGlobals.formats.FloatFormat) +
+        kGlobals.formats.FloatFormat(the_cluster.cc) +
         "</em>";
     }
 
