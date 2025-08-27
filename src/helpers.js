@@ -59,7 +59,8 @@ function datamonkey_export_csv_button(data, name) {
     pom.setAttribute("download", name);
     pom.className = "btn btn-default btn-sm";
     pom.innerHTML =
-      __("general")["download_csv_icon"] || '<span class="glyphicon glyphicon-floppy-save"></span> Download CSV';
+      '<span class="glyphicon glyphicon-floppy-save"></span> ' + 
+      (__("general")["download_csv"] || 'Download CSV');
     $("body").append(pom);
     pom.click();
     pom.remove();
@@ -86,7 +87,8 @@ function datamonkey_export_json_button(data, title) {
     pom.setAttribute("download", title + ".json");
     pom.className = "btn btn-default btn-sm";
     pom.innerHTML =
-      __("general")["download_json_icon"] || '<span class="glyphicon glyphicon-floppy-save"></span> Download JSON';
+      '<span class="glyphicon glyphicon-floppy-save"></span> ' + 
+      (__("general")["download_json"] || 'Download JSON');
     $("body").append(pom);
     pom.click();
     pom.remove();
@@ -442,7 +444,7 @@ function exportColorScheme(uniqValues, colorizer) {
 function copyToClipboard(text) {
   navigator.clipboard.writeText(text).then(
     () => {
-      console.log(__("general")["copy_success"] || "Copying to clipboard was successful!");
+      console.log("Copying to clipboard was successful!");
     },
     (err) => {
               console.error(__("general")["copy_error"] || "Could not copy text: ", err);

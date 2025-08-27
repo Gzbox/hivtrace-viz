@@ -277,9 +277,8 @@ function secure_hiv_trace_subcluster_columns(self) {
                             }
 
                             description +=
-                              (__("general")["to_cluster_of_interest"] || " to cluster of interest <code>") +
-                              m[0] +
-                              "</code>";
+                              (__("general")["to_cluster_of_interest"] || " to cluster of interest ") +
+                              "<code>" + m[0] + "</code>";
                             return description;
                           });
                         }
