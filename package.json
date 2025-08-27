@@ -5,7 +5,7 @@
   "engines": {
     "node": ">=18 || >20"
   },
-  "main": "dist/hivtrace.js",
+  "main": "dist/hivtrace.cn.js",
   "directories": {
     "dist": "dist"
   },
