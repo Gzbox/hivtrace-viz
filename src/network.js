@@ -229,10 +229,11 @@ function handle_cluster_click(self, cluster, release) {
     }
 
     // Only show the "Show on map" option for clusters with valid country info (for now just 2 letter codes) for each node.
-    const show_on_map_enabled = _.every(
-      cluster.children,
-      (node) => self._get_node_country(node).length === 2
-    );
+    // const show_on_map_enabled = _.every(
+    //   cluster.children,
+    //   (node) => self._get_node_country(node).length === 2
+    // );
+    const show_on_map_enabled = false;
 
     if (show_on_map_enabled) {
       menu_object
