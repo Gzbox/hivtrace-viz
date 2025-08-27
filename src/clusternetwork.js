@@ -5932,7 +5932,7 @@ var hivtrace_cluster_network_graph = function (
         .append("g")
         .attr("class", "cluster-group")
         .attr("transform", (d) => "translate(" + d.x + "," + d.y + ")")
-        .on("click", (d) => network.handle_cluster_click(self, d))
+        .on("click", (d) => network.handle_cluster_click(self, d, null, self.onTrackCluster))
         .on("mouseover", cluster_pop_on)
         .on("mouseout", cluster_pop_off)
         .call(network_layout.drag().on("dragstart", cluster_pop_off));

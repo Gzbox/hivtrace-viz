@@ -353,6 +353,7 @@
     "hold_position": "Hold cluster at current position",
     "show_separate_tab": "Show this cluster in separate tab",
     "add_to_cluster_interest": "Add this cluster to the cluster of interest",
+    "track_cluster": "Track this cluster",
     "show_on_map": "Show on map",
     "show_text_label": "Show text label",
     "hide_text_label": "Hide text label",

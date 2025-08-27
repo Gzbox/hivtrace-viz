@@ -143,9 +143,11 @@ function center_cluster_handler(self, d) {
     @param self: network object
     @param cluster [optional]: the cluster object to act on
     @param release [optional]: the cluster object to release the "fixed" flag from
+    @param onTrackCluster [optional]: callback function for track cluster action
+                                        Receives (clusterInfo, allData) parameters
 */
 
-function handle_cluster_click(self, cluster, release) {
+function handle_cluster_click(self, cluster, release, onTrackCluster) {
   var container = d3.select(self.container);
   var id = "d3_context_menu_id";
   var menu_object = container.select("#" + id);
@@ -225,6 +227,55 @@ function handle_cluster_click(self, cluster, release) {
           clustersOfInterest
             .get_editor()
             .append_nodes(_.map(cluster.children, (c) => self.entity_id(c)));
+        });
+    }
+
+    // Enterprise-grade track cluster functionality
+    // Only show if onTrackCluster callback is provided
+    if (onTrackCluster && typeof onTrackCluster === 'function') {
+      menu_object
+        .append("li")
+        .append("a")
+        .attr("tabindex", "-1")
+        .text((d) => __("network_tab")["track_cluster"] || "Track this cluster")
+        .on("click", (d) => {
+          // Prepare comprehensive cluster information
+          const clusterInfo = {
+            cluster_id: cluster.cluster_id,
+            cluster: cluster,
+            node_count: cluster.children ? cluster.children.length : 0,
+            nodes: cluster.children || [],
+            cluster_size: cluster.cluster_size || 0,
+            expanded: cluster.expanded || false,
+            fixed: cluster.fixed || false,
+            x: cluster.x,
+            y: cluster.y,
+            attributes: cluster.attributes || {},
+            // Add any additional cluster metadata
+            ...(cluster.patient_attributes && { patient_attributes: cluster.patient_attributes })
+          };
+
+          // Prepare comprehensive network data
+          const allData = {
+            json: self.json,
+            clusters: self.clusters,
+            nodes: self.nodes,
+            edges: self.edges,
+            network_info: {
+              node_count: self.nodes ? self.nodes.length : 0,
+              edge_count: self.edges ? self.edges.length : 0,
+              cluster_count: self.clusters ? self.clusters.length : 0
+            }
+          };
+
+          // Execute callback with proper error handling
+          try {
+            onTrackCluster(clusterInfo, allData);
+          } catch (error) {
+            console.error('Error executing track cluster callback:', error);
+          }
+          
+          menu_object.style("display", "none");
         });
     }
 

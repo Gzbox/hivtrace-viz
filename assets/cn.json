@@ -353,6 +353,7 @@
     "hold_position": "将簇固定在当前位置",
     "show_separate_tab": "在单独标签页中显示此簇",
     "add_to_cluster_interest": "将此簇添加到关注簇",
+    "track_cluster": "跟踪此簇",
     "show_on_map": "在地图上显示",
     "show_text_label": "显示文本标签",
     "hide_text_label": "隐藏文本标签",

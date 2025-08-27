@@ -876,6 +876,73 @@
             hivtrace.histogramDistances(graph, histogram_tag, histogram_label);
             hivtrace.graphSummary(user_graph, graph_summary_tag);
 
+            // Enterprise-grade cluster tracking functionality example
+            // Configure the track cluster callback
+            user_graph.onTrackCluster = function(clusterInfo, allData) {
+              // Example implementation of cluster tracking functionality
+              console.group('🎯 Cluster Tracked - Enterprise Implementation');
+              
+              // Log comprehensive cluster information
+              console.log('📊 Cluster Details:', {
+                id: clusterInfo.cluster_id,
+                nodeCount: clusterInfo.node_count,
+                size: clusterInfo.cluster_size,
+                position: { x: clusterInfo.x, y: clusterInfo.y },
+                expanded: clusterInfo.expanded,
+                fixed: clusterInfo.fixed
+              });
+              
+              // Log network context
+              console.log('🌐 Network Context:', {
+                totalNodes: allData.network_info.node_count,
+                totalEdges: allData.network_info.edge_count,
+                totalClusters: allData.network_info.cluster_count,
+                clusterPercentage: ((clusterInfo.node_count / allData.network_info.node_count) * 100).toFixed(2) + '%'
+              });
+              
+              // Sample nodes from the cluster (first 5)
+              if (clusterInfo.nodes && clusterInfo.nodes.length > 0) {
+                console.log('👥 Sample Nodes:', clusterInfo.nodes.slice(0, 5).map(node => ({
+                  id: node.id,
+                  attributes: node.patient_attributes
+                })));
+              }
+              
+              console.groupEnd();
+              
+              // In a real application, you might:
+              // - Save to localStorage or indexedDB
+              // - Send to analytics service
+              // - Update UI state
+              // - Trigger notifications
+              // - Add to user's favorites list
+              
+              // Example: Save to localStorage
+              const trackedClusters = JSON.parse(localStorage.getItem('hivtrace_tracked_clusters') || '[]');
+              const trackEntry = {
+                id: clusterInfo.cluster_id,
+                timestamp: new Date().toISOString(),
+                nodeCount: clusterInfo.node_count,
+                metadata: {
+                  position: { x: clusterInfo.x, y: clusterInfo.y },
+                  networkSize: allData.network_info.node_count
+                }
+              };
+              
+              // Avoid duplicates
+              if (!trackedClusters.find(f => f.id === clusterInfo.cluster_id)) {
+                trackedClusters.push(trackEntry);
+                localStorage.setItem('hivtrace_tracked_clusters', JSON.stringify(trackedClusters));
+                
+                // User feedback
+                alert(`✅ 簇 ${clusterInfo.cluster_id} 已跟踪成功！\n` +
+                      `包含 ${clusterInfo.node_count} 个节点\n` +
+                      `占网络总节点的 ${((clusterInfo.node_count / allData.network_info.node_count) * 100).toFixed(2)}%`);
+              } else {
+                alert(`ℹ️ 簇 ${clusterInfo.cluster_id} 已经在跟踪列表中！`);
+              }
+            };
+
             [
               "#main-tab",
               "#graph-tab",
